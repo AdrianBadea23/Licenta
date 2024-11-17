@@ -16,20 +16,23 @@ behaviors:
       normalize: false
       hidden_units: 256
       num_layers: 2
+      # use_recurrent: true
+      # sequence_length: 128
+      # memory_size: 256
     reward_signals:
       extrinsic:
         gamma: 0.99
         strength: 1.0
       curiosity:
         gamma: 0.99
-        strength: 0.5
+        strength: 0.01
         encoding_size: 128
-    #   gail:
-    #     strength: 0.5
-    #     demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\Slalom.demo"
-    # behavioral_cloning:
-    #   strength: 0.5
-    #   demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\Slalom.demo"
+      gail:
+        strength: 1.0
+        demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRun.demo"
+    behavioral_cloning:
+      strength: 1.0
+      demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRun.demo"
     max_steps: 10000000000000000000000000000000
     time_horizon: 64
     summary_freq: 10000

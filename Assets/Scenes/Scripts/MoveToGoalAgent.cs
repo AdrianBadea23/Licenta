@@ -8,10 +8,6 @@ using Random = UnityEngine.Random;
 public class MoveToGoalAgent : Agent
 {
     [SerializeField] private Transform targetTransform;
-    [SerializeField] private RayPerceptionSensorComponent3D raySensorWalls;
-    [SerializeField] private RayPerceptionSensorComponent3D raySensorGates;
-    [SerializeField] private RayPerceptionSensorComponent3D raySensorBall;
-    [SerializeField] private RayPerceptionSensorComponent3D raySensorSideObj;
     private Rigidbody _agentRigidbody;
     private float episodeTime;
     private Vector3 lastPosition;
@@ -20,15 +16,17 @@ public class MoveToGoalAgent : Agent
     public void Start()
     {
         _agentRigidbody = GetComponent<Rigidbody>();
-        episodeTime = 0f;
-        startingPosition = transform.position;
+        //episodeTime = 0f;
+        float x = transform.localPosition.x;
+        float z = transform.localPosition.z;
+        startingPosition = new Vector3(x, 3, z);
     }
 
 
     public override void OnEpisodeBegin()
     {
-        targetTransform.localPosition = new Vector3(-320f, 3f, -352f);
-        transform.position = startingPosition;
+        //targetTransform.localPosition = new Vector3(-6.1f, 3.14f, Random.Range(-9f, 9f));
+        transform.localPosition = new Vector3(25.6f, 3.5f, 8.6f);
     }
     
     private void PenalizeProximityToWalls()
@@ -61,7 +59,8 @@ public class MoveToGoalAgent : Agent
         lastPosition = transform.position;
     }
     
-    private void FixedUpdate()
+    /*
+     * private void FixedUpdate()
     { 
         episodeTime += Time.fixedDeltaTime;
 
@@ -72,6 +71,8 @@ public class MoveToGoalAgent : Agent
             EndEpisode();
         }
     }
+     */
+    
     
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -96,48 +97,43 @@ public class MoveToGoalAgent : Agent
     public override void OnActionReceived(ActionBuffers actions)
     {
         float distanceToGoal = Vector3.Distance(transform.localPosition, targetTransform.localPosition);
-        float moveX = actions.ContinuousActions[0];
-        float moveZ = actions.ContinuousActions[1];
-
-        //float moveSpeed = 10f;
-        //Vector3 movement = new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
-        //_agentRigidbody.MovePosition(_agentRigidbody.position + movement);
+        float turn = actions.ContinuousActions[0];
+        float moveForward = actions.ContinuousActions[1];
         
         float moveSpeed = 10f;
-        Vector3 moveDirection = new Vector3(moveX, 0, moveZ).normalized;
+        float turnSpeed = 100f;
+        Vector3 moveDirection = transform.forward * moveForward;
         float moveDistance = moveSpeed * Time.fixedDeltaTime;
+        
+        Vector3 newPosition = _agentRigidbody.position + moveDirection * moveDistance;
+        _agentRigidbody.MovePosition(newPosition);
+        
+        float turnAmount = turn * turnSpeed * Time.fixedDeltaTime;
+        Quaternion newRotation = Quaternion.Euler(0, transform.eulerAngles.y + turnAmount, 0);
+        _agentRigidbody.MoveRotation(newRotation);
 
-        // Raycast to detect obstacles and check if the hit object is not tagged as "Gate"
+        // Raycast to detect obstacles and check if the hit object is not tagged as "Gate"/"Goal"/"SideObj"
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, moveDirection, out hit, moveDistance))
+        if (Physics.Raycast(transform.localPosition, moveDirection, out hit, moveDistance))
         {
-            // If the hit object is not a gate, prevent movement
-            if (!hit.collider.CompareTag("Gate"))
+            if (!hit.collider.CompareTag("Gate") && !hit.collider.CompareTag("Goal") && !hit.collider.CompareTag("SideObj"))
             {
-                float proximityPenalty = 1f - (hit.distance / moveDistance); // Closer = higher penalty
-                AddReward(-proximityPenalty * 0.01f); // Penalize based on closeness to the wall
-                //moveDirection = Vector3.Reflect(moveDirection, hit.normal);
+                float proximityPenalty = 1f - (hit.distance / moveDistance); 
+                AddReward(-proximityPenalty * 0.01f); 
                 EndEpisode();
             }
-            //_agentRigidbody.MovePosition(_agentRigidbody.position + moveDirection * moveDistance);
         }
-    
-        // If no obstacle or only a gate is detected, move the agent
-        _agentRigidbody.MovePosition(_agentRigidbody.position + moveDirection * moveDistance);
+        
         PenalizeProximityToWalls();
         EncourageMovement();
         float distanceToGoalAfter = Vector3.Distance(transform.localPosition, targetTransform.localPosition);
-        //float distanceReward = distanceToGoal - distanceToGoalAfter;
-        //AddReward(distanceReward * 0.01f);
-        //AddReward(-0.01f);
-        
         if (distanceToGoalAfter < distanceToGoal)
         {
-            AddReward(0.1f); // Small positive reward for moving closer
+            AddReward(0.5f); // Small positive reward for moving closer
         }
         else
         {
-            AddReward(-0.01f); // Small penalty for moving away or staying idle
+            AddReward(-0.1f); // Small penalty for moving away or staying idle
         }
     }
 
@@ -145,30 +141,35 @@ public class MoveToGoalAgent : Agent
     {
         if (other.TryGetComponent<Goal>(out Goal goal))
         {
-            AddReward(10f);
+            AddReward(5f);
             EndEpisode();
         }
         
         if (other.TryGetComponent<Gate>(out Gate gate))
         {
-            AddReward(2f);
+            AddReward(1f);
         }
-
-        if (other.gameObject.CompareTag("Wall"))
+        
+        if (other.gameObject.CompareTag("SideObj"))
         {
-            AddReward(-0.5f);
+            AddReward(0.5f);
+            Debug.Log("Collected SideObj");
+        }
+        
+        if (other.gameObject.CompareTag("KillZone"))
+        {
+            SetReward(-5f);
             EndEpisode();
         }
         
-        /*
-         * if (other.TryGetComponent<Wall>(out Wall wall))
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-5f);
-            //floorMeshRenderer.material = lossMaterial;
-            //EndEpisode();
+            AddReward(-0.5f);
+            Debug.Log("Wall collision");
         }
-         */
-        
-        
     }
 }

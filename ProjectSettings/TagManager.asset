@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Goal
   - SideObj
+  - KillZone
   layers:
   - Default
   - TransparentFX
