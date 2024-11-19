@@ -12,21 +12,35 @@ public class MoveToGoalAgent : Agent
     private float episodeTime;
     private Vector3 lastPosition;
     private Vector3 startingPosition;
+    private Vector3 previousPosition; // Track the agent's position
+    private float stuckTime; // Time the agent has been "stuck"
+    private const float stuckThreshold = 0.1f; // Minimum movement distance to not be "stuck"
+    private const float maxStuckDuration = 20.0f; // Maximum time the agent can be stuck
+    EnvironmentParameters m_ResetParams;
+    private float[] ballPositions = new float[2];
+    private Quaternion startingRotation;
+    private float ballReward = 5f;
 
     public void Start()
     {
+        m_ResetParams = Academy.Instance.EnvironmentParameters;
         _agentRigidbody = GetComponent<Rigidbody>();
         //episodeTime = 0f;
         float x = transform.localPosition.x;
         float z = transform.localPosition.z;
         startingPosition = new Vector3(x, 3, z);
+        previousPosition = startingPosition;
+        startingRotation.eulerAngles = transform.localRotation.eulerAngles;
+        ballPositions[0] = m_ResetParams.GetWithDefault("ballPositionX", 129.3359f);
+        ballPositions[1] = m_ResetParams.GetWithDefault("ballPositionZ", -18.94571f);
     }
 
 
     public override void OnEpisodeBegin()
     {
-        //targetTransform.localPosition = new Vector3(-6.1f, 3.14f, Random.Range(-9f, 9f));
+        targetTransform.localPosition = new Vector3(ballPositions[0], 3.14f, ballPositions[1]);
         transform.localPosition = new Vector3(25.6f, 3.5f, 8.6f);
+        transform.localRotation = startingRotation;
     }
     
     private void PenalizeProximityToWalls()
@@ -43,7 +57,7 @@ public class MoveToGoalAgent : Agent
         {
             float distance = hit.distance; // Distance to the wall
             float penalty = Mathf.Lerp(-0.1f, 0f, distance / maxWallPenaltyRange); // Closer = higher penalty
-            AddReward(penalty);
+            //AddReward(penalty);
         }
     }
     
@@ -60,14 +74,26 @@ public class MoveToGoalAgent : Agent
     }
     
     /*
-     * private void FixedUpdate()
+     private void FixedUpdate()
     { 
         episodeTime += Time.fixedDeltaTime;
 
-        if (episodeTime >= 60f)
+        // Check if the agent is stuck
+        if (Vector3.Distance(transform.localPosition, previousPosition) < stuckThreshold)
         {
-            SetReward(-1f);
-            episodeTime = 0;
+            stuckTime += Time.fixedDeltaTime;
+        }
+        else
+        {
+            stuckTime = 0f; // Reset if the agent moved
+        }
+
+        previousPosition = transform.localPosition;
+
+        // If the agent has been stuck for too long, reset the episode
+        if (stuckTime >= maxStuckDuration)
+        {
+            SetReward(-1f); // Penalize the agent for being stuck
             EndEpisode();
         }
     }
@@ -119,7 +145,7 @@ public class MoveToGoalAgent : Agent
             if (!hit.collider.CompareTag("Gate") && !hit.collider.CompareTag("Goal") && !hit.collider.CompareTag("SideObj"))
             {
                 float proximityPenalty = 1f - (hit.distance / moveDistance); 
-                AddReward(-proximityPenalty * 0.01f); 
+                AddReward(-proximityPenalty * 0.001f); 
                 EndEpisode();
             }
         }
@@ -129,19 +155,23 @@ public class MoveToGoalAgent : Agent
         float distanceToGoalAfter = Vector3.Distance(transform.localPosition, targetTransform.localPosition);
         if (distanceToGoalAfter < distanceToGoal)
         {
-            AddReward(0.5f); // Small positive reward for moving closer
+            AddReward(0.002f); // Small positive reward for moving closer
         }
         else
         {
-            AddReward(-0.1f); // Small penalty for moving away or staying idle
+            AddReward(-0.001f); // Small penalty for moving away or staying idle
         }
+        
+        AddReward(-0.0001f); // Speed the agent a bit.
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Goal>(out Goal goal))
         {
-            AddReward(5f);
+            SetReward(ballReward);
+            ballReward += 0.25f;
+            //Debug.Log("Done");
             EndEpisode();
         }
         
@@ -152,8 +182,7 @@ public class MoveToGoalAgent : Agent
         
         if (other.gameObject.CompareTag("SideObj"))
         {
-            AddReward(0.5f);
-            Debug.Log("Collected SideObj");
+            AddReward(0.2f);
         }
         
         if (other.gameObject.CompareTag("KillZone"))
@@ -168,8 +197,10 @@ public class MoveToGoalAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            AddReward(-0.5f);
-            Debug.Log("Wall collision");
+            SetReward(-2.5f);
+            ballReward -= 0.01f;
+            EndEpisode();
+                
         }
     }
 }

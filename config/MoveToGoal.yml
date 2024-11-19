@@ -3,7 +3,7 @@ behaviors:
     trainer_type: ppo
     hyperparameters:
       batch_size: 1024
-      buffer_size: 10000
+      buffer_size: 50000
       learning_rate: 3.0e-4
       beta: 5.0e-4
       epsilon: 0.2
@@ -16,26 +16,240 @@ behaviors:
       normalize: false
       hidden_units: 256
       num_layers: 2
-      # use_recurrent: true
-      # sequence_length: 128
-      # memory_size: 256
     reward_signals:
       extrinsic:
         gamma: 0.99
         strength: 1.0
-      curiosity:
-        gamma: 0.99
-        strength: 0.01
-        encoding_size: 128
+      # curiosity:
+      #   gamma: 0.99
+      #   strength: 0.01
+      #   encoding_size: 128
       gail:
-        strength: 1.0
-        demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRun.demo"
+        strength: 0.15
+        demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRunExtend.demo"
     behavioral_cloning:
-      strength: 1.0
-      demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRun.demo"
+      strength: 0.2
+      demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRunExtend.demo"
     max_steps: 10000000000000000000000000000000
     time_horizon: 64
     summary_freq: 10000
     keep_checkpoints: 100000000000
 
-# TRY WITH RECURRENT NEURAL NETWORKS
+environment_parameters:
+  ballPositionX:
+    curriculum:
+      - name: FirstLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 30
+          threshold: 10
+        value: 19.33589
+      - name: SecondLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 30
+          threshold: 10
+        value: 4.335892
+      - name: ThirdLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 30
+          threshold: 10
+        value: -16.66411
+      - name: FourthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 25
+        value: -19.66411
+      - name: FifthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 25
+        value: 2.335892
+      - name: SixthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 25
+        value: 34.33589
+      - name: SeventhLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 30
+        value: 49.33589
+      - name: EightLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 30
+        value: 46.33589
+      - name: NinthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 40
+          threshold: 30
+        value: 65.33589
+      - name: TenthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 40
+          threshold: 30
+        value: 76.33589
+      - name: EleventhLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 40
+          threshold: 30
+        value: 94.33589
+      - name: TwelfthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 50
+          threshold: 50
+        value: 106.3359
+      - name: ThirteenthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 50
+          threshold: 50
+        value: 121.3359
+      - name: FourteenthLesson
+        value: 129.3359
+
+  ballPositionZ:
+    curriculum:
+      - name: FirstLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 30
+          threshold: 10
+        value: 34.05429
+      - name: SecondLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 30
+          threshold: 10
+        value: 45.05429
+      - name: ThirdLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 30
+          threshold: 10
+        value: 24.05429
+      - name: FourthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 25
+        value: -24.94571
+      - name: FifthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 25
+        value: -50.94571
+      - name: SixthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 25
+        value: -50.94571
+      - name: SeventhLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 30
+        value: -62.94571
+      - name: EightLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 35
+          threshold: 30
+        value: -89.94571
+      - name: NinthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 40
+          threshold: 30
+        value: -113.9457
+      - name: TenthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 40
+          threshold: 30
+        value: -94.94571
+      - name: EleventhLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 40
+          threshold: 30
+        value: -83.94571
+      - name: TwelfthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 50
+          threshold: 50
+        value: -45.94571
+      - name: ThirteenthLesson
+        completion_criteria: 
+          measure: reward
+          behavior: MoveToGoal
+          signal_smoothing: true
+          min_lesson_length: 50
+          threshold: 50
+        value: -32.94571
+      - name: FourteenthLesson
+        value: -18.94571
