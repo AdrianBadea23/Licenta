@@ -1,0 +1,457 @@
+default_settings: null
+behaviors:
+  MoveToGoal:
+    trainer_type: ppo
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 50000
+      learning_rate: 0.0003
+      beta: 0.0005
+      epsilon: 0.2
+      lambd: 0.99
+      num_epoch: 3
+      shared_critic: false
+      learning_rate_schedule: linear
+      beta_schedule: constant
+      epsilon_schedule: linear
+    checkpoint_interval: 500000
+    network_settings:
+      normalize: false
+      hidden_units: 256
+      num_layers: 2
+      vis_encode_type: simple
+      memory: null
+      goal_conditioning_type: hyper
+      deterministic: false
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+        network_settings:
+          normalize: false
+          hidden_units: 128
+          num_layers: 2
+          vis_encode_type: simple
+          memory: null
+          goal_conditioning_type: hyper
+          deterministic: false
+      gail:
+        gamma: 0.99
+        strength: 0.15
+        network_settings:
+          normalize: false
+          hidden_units: 128
+          num_layers: 2
+          vis_encode_type: simple
+          memory: null
+          goal_conditioning_type: hyper
+          deterministic: false
+        learning_rate: 0.0003
+        encoding_size: null
+        use_actions: false
+        use_vail: false
+        demo_path: C:\Users\Adrian\Desktop\RL\Assets\Demonstrations\DungeonRunExtend.demo
+    init_path: null
+    keep_checkpoints: 100000000000
+    even_checkpoints: false
+    max_steps: 9999999999999999635896294965248
+    time_horizon: 64
+    summary_freq: 10000
+    threaded: false
+    self_play: null
+    behavioral_cloning:
+      demo_path: C:\Users\Adrian\Desktop\RL\Assets\Demonstrations\DungeonRunExtend.demo
+      steps: 0
+      strength: 0.2
+      samples_per_update: 0
+      num_epoch: null
+      batch_size: null
+env_settings:
+  env_path: C:\Users\Adrian\Desktop\GameBuilds\RL.exe
+  env_args: null
+  base_port: 5005
+  num_envs: 5
+  num_areas: 1
+  timeout_wait: 60
+  seed: -1
+  max_lifetime_restarts: 10
+  restarts_rate_limit_n: 1
+  restarts_rate_limit_period_s: 60
+engine_settings:
+  width: 84
+  height: 84
+  quality_level: 5
+  time_scale: 100.0
+  target_frame_rate: -1
+  capture_frame_rate: 60
+  no_graphics: true
+  no_graphics_monitor: false
+environment_parameters:
+  ballPositionX:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1110
+          value: 19.33589
+      name: FirstLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 30
+        signal_smoothing: true
+        threshold: 10.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1111
+          value: 4.335892
+      name: SecondLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 30
+        signal_smoothing: true
+        threshold: 10.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1112
+          value: -16.66411
+      name: ThirdLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 30
+        signal_smoothing: true
+        threshold: 10.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1113
+          value: -19.66411
+      name: FourthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 25.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1114
+          value: 2.335892
+      name: FifthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 25.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1115
+          value: 34.33589
+      name: SixthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 25.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1116
+          value: 49.33589
+      name: SeventhLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1117
+          value: 46.33589
+      name: EightLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1118
+          value: 65.33589
+      name: NinthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 40
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1119
+          value: 76.33589
+      name: TenthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 40
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1120
+          value: 94.33589
+      name: EleventhLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 40
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1121
+          value: 106.3359
+      name: TwelfthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 50
+        signal_smoothing: true
+        threshold: 50.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1122
+          value: 121.3359
+      name: ThirteenthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 50
+        signal_smoothing: true
+        threshold: 50.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1123
+          value: 129.3359
+      name: FourteenthLesson
+      completion_criteria: null
+  ballPositionZ:
+    curriculum:
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1124
+          value: 34.05429
+      name: FirstLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 30
+        signal_smoothing: true
+        threshold: 10.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1125
+          value: 45.05429
+      name: SecondLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 30
+        signal_smoothing: true
+        threshold: 10.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1126
+          value: 24.05429
+      name: ThirdLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 30
+        signal_smoothing: true
+        threshold: 10.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1127
+          value: -24.94571
+      name: FourthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 25.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1128
+          value: -50.94571
+      name: FifthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 25.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1129
+          value: -50.94571
+      name: SixthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 25.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1130
+          value: -62.94571
+      name: SeventhLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1131
+          value: -89.94571
+      name: EightLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 35
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1132
+          value: -113.9457
+      name: NinthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 40
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1133
+          value: -94.94571
+      name: TenthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 40
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1134
+          value: -83.94571
+      name: EleventhLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 40
+        signal_smoothing: true
+        threshold: 30.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1135
+          value: -45.94571
+      name: TwelfthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 50
+        signal_smoothing: true
+        threshold: 50.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1136
+          value: -32.94571
+      name: ThirteenthLesson
+      completion_criteria:
+        behavior: MoveToGoal
+        measure: reward
+        min_lesson_length: 50
+        signal_smoothing: true
+        threshold: 50.0
+        require_reset: false
+    - value:
+        sampler_type: constant
+        sampler_parameters:
+          seed: 1137
+          value: -18.94571
+      name: FourteenthLesson
+      completion_criteria: null
+checkpoint_settings:
+  run_id: AmPusBiciuPeEi
+  initialize_from: null
+  load_model: false
+  resume: true
+  force: false
+  train_model: false
+  inference: false
+  results_dir: results
+torch_settings:
+  device: null
+debug: false

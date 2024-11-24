@@ -1,0 +1,731 @@
+{
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    },
+    "ShootingSpirit": {
+        "checkpoints": [
+            {
+                "steps": 0,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-0.onnx",
+                "reward": null,
+                "creation_time": 1732446267.4883108,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-0.pt"
+                ]
+            },
+            {
+                "steps": 11829,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-11829.onnx",
+                "reward": 2.235434173621654,
+                "creation_time": 1732448827.1331894,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-11829.pt"
+                ]
+            },
+            {
+                "steps": 13033,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-13033.onnx",
+                "reward": 4.863766630296595,
+                "creation_time": 1732449080.0731668,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-13033.pt"
+                ]
+            },
+            {
+                "steps": 83905,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-83905.onnx",
+                "reward": null,
+                "creation_time": 1732450085.7175066,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-83905.pt"
+                ]
+            },
+            {
+                "steps": 165707,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-165707.onnx",
+                "reward": null,
+                "creation_time": 1732451016.3162956,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-165707.pt"
+                ]
+            },
+            {
+                "steps": 170827,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-170827.onnx",
+                "reward": null,
+                "creation_time": 1732451073.6105216,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-170827.pt"
+                ]
+            },
+            {
+                "steps": 179979,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-179979.onnx",
+                "reward": null,
+                "creation_time": 1732451286.8772125,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-179979.pt"
+                ]
+            },
+            {
+                "steps": 189987,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-189987.onnx",
+                "reward": null,
+                "creation_time": 1732451333.0895326,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-189987.pt"
+                ]
+            },
+            {
+                "steps": 199983,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-199983.onnx",
+                "reward": null,
+                "creation_time": 1732451379.265918,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-199983.pt"
+                ]
+            },
+            {
+                "steps": 209950,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-209950.onnx",
+                "reward": null,
+                "creation_time": 1732451428.5866408,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-209950.pt"
+                ]
+            },
+            {
+                "steps": 219998,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-219998.onnx",
+                "reward": null,
+                "creation_time": 1732451478.8497188,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-219998.pt"
+                ]
+            },
+            {
+                "steps": 229982,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-229982.onnx",
+                "reward": null,
+                "creation_time": 1732451527.353451,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-229982.pt"
+                ]
+            },
+            {
+                "steps": 239966,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-239966.onnx",
+                "reward": null,
+                "creation_time": 1732451578.3485627,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-239966.pt"
+                ]
+            },
+            {
+                "steps": 249960,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-249960.onnx",
+                "reward": null,
+                "creation_time": 1732451628.8010387,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-249960.pt"
+                ]
+            },
+            {
+                "steps": 259993,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-259993.onnx",
+                "reward": null,
+                "creation_time": 1732451678.3943055,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-259993.pt"
+                ]
+            },
+            {
+                "steps": 269977,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-269977.onnx",
+                "reward": null,
+                "creation_time": 1732451727.846761,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-269977.pt"
+                ]
+            },
+            {
+                "steps": 279961,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-279961.onnx",
+                "reward": null,
+                "creation_time": 1732451778.4712882,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-279961.pt"
+                ]
+            },
+            {
+                "steps": 289945,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-289945.onnx",
+                "reward": null,
+                "creation_time": 1732451829.0091038,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-289945.pt"
+                ]
+            },
+            {
+                "steps": 299972,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-299972.onnx",
+                "reward": null,
+                "creation_time": 1732451879.4818268,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-299972.pt"
+                ]
+            },
+            {
+                "steps": 309998,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-309998.onnx",
+                "reward": null,
+                "creation_time": 1732451929.120203,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-309998.pt"
+                ]
+            },
+            {
+                "steps": 319994,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-319994.onnx",
+                "reward": null,
+                "creation_time": 1732451978.0149357,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-319994.pt"
+                ]
+            },
+            {
+                "steps": 329978,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-329978.onnx",
+                "reward": null,
+                "creation_time": 1732452027.3171499,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-329978.pt"
+                ]
+            },
+            {
+                "steps": 339985,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-339985.onnx",
+                "reward": null,
+                "creation_time": 1732452077.3299096,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-339985.pt"
+                ]
+            },
+            {
+                "steps": 349969,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-349969.onnx",
+                "reward": null,
+                "creation_time": 1732452127.2780316,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-349969.pt"
+                ]
+            },
+            {
+                "steps": 359973,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-359973.onnx",
+                "reward": null,
+                "creation_time": 1732452177.100501,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-359973.pt"
+                ]
+            },
+            {
+                "steps": 369957,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-369957.onnx",
+                "reward": null,
+                "creation_time": 1732452226.7331123,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-369957.pt"
+                ]
+            },
+            {
+                "steps": 379987,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-379987.onnx",
+                "reward": 32.030004045926034,
+                "creation_time": 1732452276.6223304,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-379987.pt"
+                ]
+            },
+            {
+                "steps": 389972,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-389972.onnx",
+                "reward": null,
+                "creation_time": 1732452326.7625554,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-389972.pt"
+                ]
+            },
+            {
+                "steps": 399956,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-399956.onnx",
+                "reward": null,
+                "creation_time": 1732452376.8516374,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-399956.pt"
+                ]
+            },
+            {
+                "steps": 409940,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-409940.onnx",
+                "reward": null,
+                "creation_time": 1732452428.1678956,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-409940.pt"
+                ]
+            },
+            {
+                "steps": 419988,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-419988.onnx",
+                "reward": null,
+                "creation_time": 1732452479.9972386,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-419988.pt"
+                ]
+            },
+            {
+                "steps": 429972,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-429972.onnx",
+                "reward": null,
+                "creation_time": 1732452531.455987,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-429972.pt"
+                ]
+            },
+            {
+                "steps": 439960,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-439960.onnx",
+                "reward": null,
+                "creation_time": 1732452582.588911,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-439960.pt"
+                ]
+            },
+            {
+                "steps": 449971,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-449971.onnx",
+                "reward": null,
+                "creation_time": 1732452632.1640525,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-449971.pt"
+                ]
+            },
+            {
+                "steps": 459986,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-459986.onnx",
+                "reward": null,
+                "creation_time": 1732452681.956055,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-459986.pt"
+                ]
+            },
+            {
+                "steps": 469975,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-469975.onnx",
+                "reward": null,
+                "creation_time": 1732452732.522194,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-469975.pt"
+                ]
+            },
+            {
+                "steps": 479956,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-479956.onnx",
+                "reward": null,
+                "creation_time": 1732452783.6058905,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-479956.pt"
+                ]
+            },
+            {
+                "steps": 489978,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-489978.onnx",
+                "reward": null,
+                "creation_time": 1732452835.167273,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-489978.pt"
+                ]
+            },
+            {
+                "steps": 494394,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-494394.onnx",
+                "reward": null,
+                "creation_time": 1732452862.497991,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-494394.pt"
+                ]
+            },
+            {
+                "steps": 499962,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-499962.onnx",
+                "reward": null,
+                "creation_time": 1732452928.5454674,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-499962.pt"
+                ]
+            },
+            {
+                "steps": 509998,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-509998.onnx",
+                "reward": -55.17999654635787,
+                "creation_time": 1732452975.2583966,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-509998.pt"
+                ]
+            },
+            {
+                "steps": 519964,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-519964.onnx",
+                "reward": null,
+                "creation_time": 1732453024.6112075,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-519964.pt"
+                ]
+            },
+            {
+                "steps": 529998,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-529998.onnx",
+                "reward": -10.75999952852726,
+                "creation_time": 1732453074.0820494,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-529998.pt"
+                ]
+            },
+            {
+                "steps": 539961,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-539961.onnx",
+                "reward": null,
+                "creation_time": 1732453123.7967892,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-539961.pt"
+                ]
+            },
+            {
+                "steps": 549945,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-549945.onnx",
+                "reward": null,
+                "creation_time": 1732453173.5205956,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-549945.pt"
+                ]
+            },
+            {
+                "steps": 559980,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-559980.onnx",
+                "reward": null,
+                "creation_time": 1732453223.2604897,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-559980.pt"
+                ]
+            },
+            {
+                "steps": 569978,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-569978.onnx",
+                "reward": -0.4100000876933336,
+                "creation_time": 1732453272.3017883,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-569978.pt"
+                ]
+            },
+            {
+                "steps": 579962,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-579962.onnx",
+                "reward": null,
+                "creation_time": 1732453320.9454882,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-579962.pt"
+                ]
+            },
+            {
+                "steps": 589946,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-589946.onnx",
+                "reward": null,
+                "creation_time": 1732453370.7848842,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-589946.pt"
+                ]
+            },
+            {
+                "steps": 599994,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-599994.onnx",
+                "reward": null,
+                "creation_time": 1732453421.7517264,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-599994.pt"
+                ]
+            },
+            {
+                "steps": 609978,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-609978.onnx",
+                "reward": null,
+                "creation_time": 1732453472.934399,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-609978.pt"
+                ]
+            },
+            {
+                "steps": 619962,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-619962.onnx",
+                "reward": null,
+                "creation_time": 1732453524.5422122,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-619962.pt"
+                ]
+            },
+            {
+                "steps": 629946,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-629946.onnx",
+                "reward": null,
+                "creation_time": 1732453576.1839612,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-629946.pt"
+                ]
+            },
+            {
+                "steps": 639994,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-639994.onnx",
+                "reward": null,
+                "creation_time": 1732453628.7057245,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-639994.pt"
+                ]
+            },
+            {
+                "steps": 649992,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-649992.onnx",
+                "reward": null,
+                "creation_time": 1732453679.102152,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-649992.pt"
+                ]
+            },
+            {
+                "steps": 659969,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-659969.onnx",
+                "reward": null,
+                "creation_time": 1732453728.3578324,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-659969.pt"
+                ]
+            },
+            {
+                "steps": 669953,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-669953.onnx",
+                "reward": null,
+                "creation_time": 1732453777.6458025,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-669953.pt"
+                ]
+            },
+            {
+                "steps": 679937,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-679937.onnx",
+                "reward": null,
+                "creation_time": 1732453827.6747484,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-679937.pt"
+                ]
+            },
+            {
+                "steps": 689979,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-689979.onnx",
+                "reward": null,
+                "creation_time": 1732453877.453297,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-689979.pt"
+                ]
+            },
+            {
+                "steps": 699963,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-699963.onnx",
+                "reward": null,
+                "creation_time": 1732453927.472488,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-699963.pt"
+                ]
+            },
+            {
+                "steps": 709947,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-709947.onnx",
+                "reward": null,
+                "creation_time": 1732453977.7894762,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-709947.pt"
+                ]
+            },
+            {
+                "steps": 719995,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-719995.onnx",
+                "reward": null,
+                "creation_time": 1732454028.6787963,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-719995.pt"
+                ]
+            },
+            {
+                "steps": 729979,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-729979.onnx",
+                "reward": null,
+                "creation_time": 1732454079.9905488,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-729979.pt"
+                ]
+            },
+            {
+                "steps": 739963,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-739963.onnx",
+                "reward": null,
+                "creation_time": 1732454131.462628,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-739963.pt"
+                ]
+            },
+            {
+                "steps": 749947,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-749947.onnx",
+                "reward": null,
+                "creation_time": 1732454182.9451673,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-749947.pt"
+                ]
+            },
+            {
+                "steps": 759995,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-759995.onnx",
+                "reward": null,
+                "creation_time": 1732454235.0347853,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-759995.pt"
+                ]
+            },
+            {
+                "steps": 769979,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-769979.onnx",
+                "reward": null,
+                "creation_time": 1732454287.40199,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-769979.pt"
+                ]
+            },
+            {
+                "steps": 779963,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-779963.onnx",
+                "reward": null,
+                "creation_time": 1732454340.998226,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-779963.pt"
+                ]
+            },
+            {
+                "steps": 789947,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-789947.onnx",
+                "reward": null,
+                "creation_time": 1732454394.8723168,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-789947.pt"
+                ]
+            },
+            {
+                "steps": 799995,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-799995.onnx",
+                "reward": null,
+                "creation_time": 1732454450.4616792,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-799995.pt"
+                ]
+            },
+            {
+                "steps": 809979,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-809979.onnx",
+                "reward": null,
+                "creation_time": 1732454505.9918458,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-809979.pt"
+                ]
+            },
+            {
+                "steps": 819963,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-819963.onnx",
+                "reward": null,
+                "creation_time": 1732454563.1101277,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-819963.pt"
+                ]
+            },
+            {
+                "steps": 829947,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-829947.onnx",
+                "reward": null,
+                "creation_time": 1732454621.5096033,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-829947.pt"
+                ]
+            },
+            {
+                "steps": 839995,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-839995.onnx",
+                "reward": null,
+                "creation_time": 1732454679.42892,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-839995.pt"
+                ]
+            },
+            {
+                "steps": 849979,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-849979.onnx",
+                "reward": null,
+                "creation_time": 1732454739.749514,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-849979.pt"
+                ]
+            },
+            {
+                "steps": 859963,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-859963.onnx",
+                "reward": null,
+                "creation_time": 1732454800.834709,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-859963.pt"
+                ]
+            },
+            {
+                "steps": 869947,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-869947.onnx",
+                "reward": null,
+                "creation_time": 1732454861.8380435,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-869947.pt"
+                ]
+            },
+            {
+                "steps": 879995,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-879995.onnx",
+                "reward": null,
+                "creation_time": 1732454923.725476,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-879995.pt"
+                ]
+            },
+            {
+                "steps": 881083,
+                "file_path": "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-881083.onnx",
+                "reward": null,
+                "creation_time": 1732454934.4036536,
+                "auxillary_file_paths": [
+                    "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-881083.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 881083,
+            "file_path": "results\\AutoFire\\ShootingSpirit.onnx",
+            "reward": null,
+            "creation_time": 1732454934.4036536,
+            "auxillary_file_paths": [
+                "results\\AutoFire\\ShootingSpirit\\ShootingSpirit-881083.pt"
+            ]
+        }
+    }
+}
