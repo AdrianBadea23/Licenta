@@ -20,6 +20,7 @@ public class MoveToGoalAgent : Agent
     private float[] ballPositions = new float[2];
     private Quaternion startingRotation;
     private float ballReward = 5f;
+    public bool isShootPressed = false;
 
     public void Start()
     {
@@ -35,7 +36,10 @@ public class MoveToGoalAgent : Agent
         ballPositions[1] = m_ResetParams.GetWithDefault("ballPositionZ", -18.94571f);
     }
 
-
+    public void Update()
+    {
+        isShootPressed = Input.GetKey(KeyCode.E);
+    }
     public override void OnEpisodeBegin()
     {
         targetTransform.localPosition = new Vector3(ballPositions[0], 3.14f, ballPositions[1]);
@@ -48,7 +52,6 @@ public class MoveToGoalAgent : Agent
         RaycastHit hit;
         float wallDetectionRange = 1.0f;
         float maxWallPenaltyRange = 1.0f;
-
         // Check for walls around the agent
         if (Physics.Raycast(transform.position, Vector3.forward, out hit, wallDetectionRange) && hit.collider.CompareTag("Wall") ||
             Physics.Raycast(transform.position, Vector3.back, out hit, wallDetectionRange) && hit.collider.CompareTag("Wall") ||
