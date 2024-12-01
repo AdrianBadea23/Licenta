@@ -21,6 +21,8 @@ public class MoveToGoalAgent : Agent
     private Quaternion startingRotation;
     private float ballReward = 5f;
     public bool isShootPressed = false;
+    [SerializeField] private Animator animator;
+    private bool isRunning = false;
 
     public void Start()
     {
@@ -114,6 +116,8 @@ public class MoveToGoalAgent : Agent
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         continuousActions[0] = Input.GetAxis("Horizontal");
         continuousActions[1] = Input.GetAxis("Vertical");
+        isRunning = continuousActions[1] != 0;
+        animator.SetBool("Running", isRunning);
     }
     
     private void RandomNudgeWhenStuck()
@@ -140,7 +144,10 @@ public class MoveToGoalAgent : Agent
         float turnAmount = turn * turnSpeed * Time.fixedDeltaTime;
         Quaternion newRotation = Quaternion.Euler(0, transform.eulerAngles.y + turnAmount, 0);
         _agentRigidbody.MoveRotation(newRotation);
-
+        
+        isRunning = moveForward != 0;
+        animator.SetBool("Running", isRunning);
+        
         // Raycast to detect obstacles and check if the hit object is not tagged as "Gate"/"Goal"/"SideObj"
         RaycastHit hit;
         if (Physics.Raycast(transform.localPosition, moveDirection, out hit, moveDistance))
@@ -149,7 +156,7 @@ public class MoveToGoalAgent : Agent
             {
                 float proximityPenalty = 1f - (hit.distance / moveDistance); 
                 AddReward(-proximityPenalty * 0.001f); 
-                EndEpisode();
+                //EndEpisode();
             }
         }
         

@@ -22,7 +22,9 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(other.gameObject);
+            EnemyAI enemyAI = other.gameObject.GetComponent<EnemyAI>();
+            enemyAI.KillEnemy();
+            Destroy(other.gameObject, 0.4f);
             Destroy(gameObject);
         }
 

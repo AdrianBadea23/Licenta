@@ -4,7 +4,7 @@ using UnityEngine;
 public class FollowPlayer : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
-    private Vector3 _offset = new Vector3(18.68926f, 24.276801f, -5.980045f);
+    private Vector3 _offset = new Vector3(10.68926f, 24.276801f, -5.980045f);
     //private float _rotationSpeed = 5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
