@@ -62,7 +62,7 @@ public class MoveToGoalAgent : Agent
         {
             float distance = hit.distance; // Distance to the wall
             float penalty = Mathf.Lerp(-0.1f, 0f, distance / maxWallPenaltyRange); // Closer = higher penalty
-            //AddReward(penalty);
+            AddReward(penalty);
         }
     }
     
@@ -152,10 +152,10 @@ public class MoveToGoalAgent : Agent
         RaycastHit hit;
         if (Physics.Raycast(transform.localPosition, moveDirection, out hit, moveDistance))
         {
-            if (!hit.collider.CompareTag("Gate") && !hit.collider.CompareTag("Goal") && !hit.collider.CompareTag("SideObj"))
+            if (!hit.collider.CompareTag("Gate") && !hit.collider.CompareTag("Goal") && !hit.collider.CompareTag("SideObj") && hit.collider.CompareTag("Floor"))
             {
                 float proximityPenalty = 1f - (hit.distance / moveDistance); 
-                AddReward(-proximityPenalty * 0.001f); 
+                AddReward(-proximityPenalty * 0.01f); 
                 //EndEpisode();
             }
         }
@@ -169,7 +169,7 @@ public class MoveToGoalAgent : Agent
         }
         else
         {
-            AddReward(-0.001f); // Small penalty for moving away or staying idle
+            AddReward(-0.002f); // Small penalty for moving away or staying idle
         }
         
         AddReward(-0.0001f); // Speed the agent a bit.
@@ -187,7 +187,7 @@ public class MoveToGoalAgent : Agent
         
         if (other.TryGetComponent<Gate>(out Gate gate))
         {
-            AddReward(1f);
+            AddReward(0.75f);
         }
         
         if (other.gameObject.CompareTag("SideObj"))
@@ -208,7 +208,7 @@ public class MoveToGoalAgent : Agent
         if (collision.gameObject.CompareTag("Wall"))
         {
             SetReward(-2.5f);
-            ballReward -= 0.01f;
+            ballReward -= 0.00001f;
             EndEpisode();
                 
         }

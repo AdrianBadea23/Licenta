@@ -1,5 +1,6 @@
 behaviors:
   MoveToGoal:
+    init_path: "C:\\Users\\Adrian\\Desktop\\RL\\results\\AmPusBiciuPeEi\\MoveToGoal\\MoveToGoal-19499976.pt"
     trainer_type: ppo
     hyperparameters:
       batch_size: 1024
@@ -25,11 +26,11 @@ behaviors:
       #   strength: 0.01
       #   encoding_size: 128
       gail:
-        strength: 0.15
-        demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRunExtend.demo"
-    behavioral_cloning:
-      strength: 0.2
-      demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonRunExtend.demo"
+        strength: 0.1
+        demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonWithOb.demo"
+    # behavioral_cloning:
+    #   strength: 0.9
+    #   demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\DungeonWithOb.demo"
     max_steps: 10000000000000000000000000000000
     time_horizon: 64
     summary_freq: 10000

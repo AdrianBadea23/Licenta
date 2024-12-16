@@ -37,7 +37,7 @@ behaviors:
           deterministic: false
       gail:
         gamma: 0.99
-        strength: 0.15
+        strength: 0.1
         network_settings:
           normalize: false
           hidden_units: 128
@@ -50,8 +50,8 @@ behaviors:
         encoding_size: null
         use_actions: false
         use_vail: false
-        demo_path: C:\Users\Adrian\Desktop\RL\Assets\Demonstrations\DungeonRunExtend.demo
-    init_path: null
+        demo_path: C:\Users\Adrian\Desktop\RL\Assets\Demonstrations\DungeonWithOb.demo
+    init_path: C:\Users\Adrian\Desktop\RL\results\AmPusBiciuPeEi\MoveToGoal\MoveToGoal-19499976.pt
     keep_checkpoints: 100000000000
     even_checkpoints: false
     max_steps: 9999999999999999635896294965248
@@ -59,13 +59,7 @@ behaviors:
     summary_freq: 10000
     threaded: false
     self_play: null
-    behavioral_cloning:
-      demo_path: C:\Users\Adrian\Desktop\RL\Assets\Demonstrations\DungeonRunExtend.demo
-      steps: 0
-      strength: 0.2
-      samples_per_update: 0
-      num_epoch: null
-      batch_size: null
+    behavioral_cloning: null
 env_settings:
   env_path: C:\Users\Adrian\Desktop\GameBuilds\RL.exe
   env_args: null
@@ -92,7 +86,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1110
+          seed: 5336
           value: 19.33589
       name: FirstLesson
       completion_criteria:
@@ -105,7 +99,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1111
+          seed: 5337
           value: 4.335892
       name: SecondLesson
       completion_criteria:
@@ -118,7 +112,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1112
+          seed: 5338
           value: -16.66411
       name: ThirdLesson
       completion_criteria:
@@ -131,7 +125,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1113
+          seed: 5339
           value: -19.66411
       name: FourthLesson
       completion_criteria:
@@ -144,7 +138,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1114
+          seed: 5340
           value: 2.335892
       name: FifthLesson
       completion_criteria:
@@ -157,7 +151,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1115
+          seed: 5341
           value: 34.33589
       name: SixthLesson
       completion_criteria:
@@ -170,7 +164,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1116
+          seed: 5342
           value: 49.33589
       name: SeventhLesson
       completion_criteria:
@@ -183,7 +177,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1117
+          seed: 5343
           value: 46.33589
       name: EightLesson
       completion_criteria:
@@ -196,7 +190,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1118
+          seed: 5344
           value: 65.33589
       name: NinthLesson
       completion_criteria:
@@ -209,7 +203,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1119
+          seed: 5345
           value: 76.33589
       name: TenthLesson
       completion_criteria:
@@ -222,7 +216,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1120
+          seed: 5346
           value: 94.33589
       name: EleventhLesson
       completion_criteria:
@@ -235,7 +229,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1121
+          seed: 5347
           value: 106.3359
       name: TwelfthLesson
       completion_criteria:
@@ -248,7 +242,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1122
+          seed: 5348
           value: 121.3359
       name: ThirteenthLesson
       completion_criteria:
@@ -261,7 +255,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1123
+          seed: 5349
           value: 129.3359
       name: FourteenthLesson
       completion_criteria: null
@@ -270,7 +264,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1124
+          seed: 5350
           value: 34.05429
       name: FirstLesson
       completion_criteria:
@@ -283,7 +277,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1125
+          seed: 5351
           value: 45.05429
       name: SecondLesson
       completion_criteria:
@@ -296,7 +290,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1126
+          seed: 5352
           value: 24.05429
       name: ThirdLesson
       completion_criteria:
@@ -309,7 +303,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1127
+          seed: 5353
           value: -24.94571
       name: FourthLesson
       completion_criteria:
@@ -322,7 +316,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1128
+          seed: 5354
           value: -50.94571
       name: FifthLesson
       completion_criteria:
@@ -335,7 +329,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1129
+          seed: 5355
           value: -50.94571
       name: SixthLesson
       completion_criteria:
@@ -348,7 +342,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1130
+          seed: 5356
           value: -62.94571
       name: SeventhLesson
       completion_criteria:
@@ -361,7 +355,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1131
+          seed: 5357
           value: -89.94571
       name: EightLesson
       completion_criteria:
@@ -374,7 +368,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1132
+          seed: 5358
           value: -113.9457
       name: NinthLesson
       completion_criteria:
@@ -387,7 +381,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1133
+          seed: 5359
           value: -94.94571
       name: TenthLesson
       completion_criteria:
@@ -400,7 +394,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1134
+          seed: 5360
           value: -83.94571
       name: EleventhLesson
       completion_criteria:
@@ -413,7 +407,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1135
+          seed: 5361
           value: -45.94571
       name: TwelfthLesson
       completion_criteria:
@@ -426,7 +420,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1136
+          seed: 5362
           value: -32.94571
       name: ThirteenthLesson
       completion_criteria:
@@ -439,7 +433,7 @@ environment_parameters:
     - value:
         sampler_type: constant
         sampler_parameters:
-          seed: 1137
+          seed: 5363
           value: -18.94571
       name: FourteenthLesson
       completion_criteria: null
