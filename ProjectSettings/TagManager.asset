@@ -12,6 +12,7 @@ TagManager:
   - KillZone
   - Enemy
   - SpectatorCamera
+  - FinalGoal
   layers:
   - Default
   - TransparentFX

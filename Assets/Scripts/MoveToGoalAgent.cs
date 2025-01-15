@@ -8,8 +8,8 @@ using Random = UnityEngine.Random;
 
 public class MoveToGoalAgent : Agent
 {
-    private Transform targetTransform;
-    private string targetTag = "Goal";
+    [SerializeField]private Transform targetTransform;
+    private string targetTag = "FinalGoal";
     private Rigidbody _agentRigidbody;
     private float episodeTime;
     private Vector3 lastPosition;
@@ -26,66 +26,140 @@ public class MoveToGoalAgent : Agent
     //[SerializeField] private Animator animator;
     private bool isRunning = false;
     //[SerializeField] private Transform modelTransform;
-    private NavMeshAgent navMeshAgent;
     private Vector3 lastAgentPosition;
+    private Vector3 goalPosition;
+    private float previousDistanceToGoal;
     private bool hasHit = false;
+    // private GameObject[] sideObjectives;
+    // private Vector3[] sideObjectivePositions;
+    // private GameObject[] Gates;
+    // private Vector3[] GatesPositions;
+    // private Quaternion[] GatesRotation;
+    Vector3 randomPos = new Vector3(0, 0, 0);
+    private float previousDistanceToSpawn = 0;
+    [SerializeField] private DungeonController dungeonController;
     
     public void Start()
     {
+        // sideObjectives = GameObject.FindGameObjectsWithTag("SideObj");
+        // sideObjectivePositions = new Vector3[sideObjectives.Length];
+        // for (int i = 0; i < sideObjectives.Length; i++)
+        // {
+        //     sideObjectivePositions[i] = sideObjectives[i].transform.position;
+        // }
+        
+        // Gates = GameObject.FindGameObjectsWithTag("Gate");
+        // GatesPositions = new Vector3[Gates.Length];
+        // GatesRotation = new Quaternion[Gates.Length];
+        // for (int i = 0; i < Gates.Length; i++)
+        // {
+        //     GatesPositions[i] = Gates[i].transform.position;
+        //     GatesRotation[i] = Gates[i].transform.rotation;
+        // }
+        
         m_ResetParams = Academy.Instance.EnvironmentParameters;
         _agentRigidbody = GetComponent<Rigidbody>();
         //episodeTime = 0f;
         float x = transform.localPosition.x;
         float z = transform.localPosition.z;
-        startingPosition = new Vector3(x, 3, z);
+        startingPosition = transform.localPosition;
         previousPosition = startingPosition;
         startingRotation.eulerAngles = transform.localRotation.eulerAngles;
         ballPositions[0] = m_ResetParams.GetWithDefault("ballPositionX", 129.3359f);
         ballPositions[1] = m_ResetParams.GetWithDefault("ballPositionZ", -18.94571f);
-        GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
-        if (targetObject != null)
-        {
-            targetTransform = targetObject.transform;
-        }
-        else
-        {
-            Debug.LogWarning("No target found");
-        }
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        GameObject targetObject = GameObject.Find(targetTag);
+        // if (targetObject != null)
+        // {
+        //     targetTransform = targetObject.transform;
+        // }
+        // else
+        // {
+        //     // Debug.LogWarning("No target found");
+        // }
+        
     }
-
+    
     public void LateUpdate()
     {
-        GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
-        if (targetObject != null)
+        // GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
+        // if (targetObject != null)
+        // {
+        //     targetTransform = targetObject.transform;
+        // }
+        // else
+        // {
+        //     // Debug.LogWarning("No target found");
+        // }
+    }
+
+    void RandomSpawn()
+    {
+        int randomCase = Random.Range(0, 7);
+
+        switch (randomCase)
         {
-            targetTransform = targetObject.transform;
+            case 0:
+                randomPos = new Vector3(0, 1.2f, 5);
+                break;
+            case 1:
+                randomPos = new Vector3(121, 1.2f, 5);
+                break;
+            case 2:
+                randomPos = new Vector3(15, 1.2f, 0);
+                break;
+            case 3:
+                randomPos = new Vector3(-56, 1.2f, 39);
+                break;
+            case 4:
+                randomPos = new Vector3(4, 1.2f, 87);
+                break;
+            case 5:
+                randomPos = new Vector3(85, 1.2f, 66);
+                break;
+            case 6:
+                randomPos = new Vector3(34, 1.2f, 46);
+                break;
+            // case 7:
+            //     randomPos = new Vector3(69, 1.2f, 19);
+            //     break;
+            // case 8:
+            //     randomPos = new Vector3(120, 1.2f, -27);
+            //     break;
+            // case 9:
+            //     randomPos = new Vector3(94, 1.2f, -24);
+            //     break;
+            default:
+                randomPos = new Vector3(0, 1.2f, 5);
+                break;
         }
-        else
-        {
-            Debug.LogWarning("No target found");
-        }
+        
     }
     public override void OnEpisodeBegin()
-    {
-        //targetTransform.localPosition = new Vector3(ballPositions[0], 3.14f, ballPositions[1]);
-        transform.localPosition = new Vector3(0f, -0.7f, 0f);
-        transform.localRotation = startingRotation;
-        hasHit = false;
-        lastAgentPosition = transform.localPosition;
-        navMeshAgent.ResetPath();
-        navMeshAgent.transform.position = new Vector3(0f, -0.5f, 0f);
+    {   
+        RandomSpawn();
+        transform.localPosition = startingPosition;
+        goalPosition = targetTransform.position;
+        previousDistanceToGoal = Vector3.Distance(transform.localPosition, goalPosition);
+
+        // Reset Rigidbody
         _agentRigidbody.linearVelocity = Vector3.zero;
         _agentRigidbody.angularVelocity = Vector3.zero;
-        GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
-        if (targetObject != null)
-        {
-            targetTransform = targetObject.transform;
-        }
-        else
-        {
-            Debug.LogWarning("No target found");
-        }
+
+        // Reset other elements
+        transform.localRotation = startingRotation;
+        dungeonController.RespawnObjectives();
+        lastAgentPosition = transform.localPosition;
+        
+        // Update target reference
+        // GameObject targetObject = GameObject.FindGameObjectWithTag(targetTag);
+        // if (targetObject != null)
+        // {
+        //     targetTransform = targetObject.transform;
+        // }
+        // else
+        // {
+        //     // Debug.LogWarning("No target found");
+        // }
     }
     
     private void PenalizeProximityToWalls()
@@ -119,76 +193,78 @@ public class MoveToGoalAgent : Agent
             AddReward(-0.01f);
         }
         lastPosition = transform.position;
-    }
-    
-    /*
-     private void FixedUpdate()
-    { 
-        episodeTime += Time.fixedDeltaTime;
+        
+        distanceMoved = Vector3.Distance(startingPosition, transform.localPosition);
 
-        // Check if the agent is stuck
-        if (Vector3.Distance(transform.localPosition, previousPosition) < stuckThreshold)
+        // Reward for moving away from the start position
+        if (distanceMoved > 5f)
         {
-            stuckTime += Time.fixedDeltaTime;
+            AddReward(0.05f); // Small positive reward for movement
         }
         else
         {
-            stuckTime = 0f; // Reset if the agent moved
-        }
-
-        previousPosition = transform.localPosition;
-
-        // If the agent has been stuck for too long, reset the episode
-        if (stuckTime >= maxStuckDuration)
-        {
-            SetReward(-1f); // Penalize the agent for being stuck
-            EndEpisode();
+            AddReward(-0.01f);
         }
     }
-     */
-    
     
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(targetTransform.localPosition);
+        if (targetTransform.localPosition != null)
+        {
+            sensor.AddObservation(targetTransform.localPosition);
+        }
+        else
+        {
+            sensor.AddObservation(Vector3.zero);
+        }
+        
+
+        // foreach (var sideObjective in sideObjectives)
+        // {
+        //     if (sideObjective != null)
+        //     {
+        //         sensor.AddObservation(sideObjective.transform.localPosition);
+        //     }
+        //     
+        // }
+        
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+        
+        // Get the discrete actions buffer
+        ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+
+        // Map WASD keys to discrete actions
+        if (Input.GetKey(KeyCode.W))
+        {
+            discreteActions[0] = 0; // Forward
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            discreteActions[0] = 1; // Backward
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            discreteActions[0] = 2; // Right
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            discreteActions[0] = 3; // Left
+        }
+        else
+        {
+            discreteActions[0] = 4;
+        }
+        
+        // ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
         // continuousActions[0] = Input.GetAxis("Horizontal");
         // continuousActions[1] = Input.GetAxis("Vertical");
         // isRunning = continuousActions[1] != 0;
         // animator.SetBool("Running", isRunning);
-
-        if (Input.GetMouseButton(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                if (hit.collider.CompareTag("Floor") || hit.collider.CompareTag("Goal"))
-                {
-                    lastAgentPosition = hit.point;
-                    hasHit = true;
-                }
-            }
-        }
-
-        if (hasHit)
-        {
-            Vector3 direction = lastAgentPosition - transform.position;
-            direction.Normalize();
-            continuousActions[0] = direction.x;
-            continuousActions[1] = direction.z;
-        }
-        else
-        {
-            continuousActions[0] = 0;
-            continuousActions[1] = 0;
-        }
         
-        Debug.Log("Heuristic continuous actions: " + continuousActions[0] + " " + continuousActions[1]);
     }
     
     private void RandomNudgeWhenStuck()
@@ -200,94 +276,75 @@ public class MoveToGoalAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float distanceToGoal = Vector3.Distance(transform.localPosition, targetTransform.localPosition);
-        float moveSideways = actions.ContinuousActions[0];
-        float moveForward = actions.ContinuousActions[1];
-        
-        Debug.Log("OnActionReceived continuous actions: " + actions.ContinuousActions[0] + " " + actions.ContinuousActions[1]);
-        
-        Vector3 coordinates = new Vector3(moveSideways, 0, moveForward);
-        Vector3 destination = transform.localPosition + coordinates;
+        // float distanceToGoal = Vector3.Distance(transform.localPosition, targetTransform.localPosition);
+        int action = actions.DiscreteActions[0];
+        float moveSpeed = 10f;
+        Vector3 movement = Vector3.zero;
+        switch (action)
+        {
+            case 0: // Move forward
+                movement = transform.forward * moveSpeed * Time.fixedDeltaTime;
+                break;
 
-        if (NavMesh.SamplePosition(destination, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            case 1: // Move backward
+                movement = -transform.forward * moveSpeed * Time.fixedDeltaTime;
+                break;
+
+            case 2: // Move right
+                movement = transform.right * moveSpeed * Time.fixedDeltaTime;
+                break;
+
+            case 3: // Move left
+                movement = -transform.right * moveSpeed * Time.fixedDeltaTime;
+                break;
+            case 4:
+                movement = Vector3.zero;
+                break;
+            default:
+                break;
+        }
+
+        if (movement != Vector3.zero)
         {
-            navMeshAgent.SetDestination(destination);
-            hasHit = true;
+            _agentRigidbody.MovePosition(_agentRigidbody.position + movement);
         }
         
-        // if (hasHit)
+        // float currentDistanceToGoal = Vector3.Distance(transform.localPosition, goalPosition);
+        // if (currentDistanceToGoal < previousDistanceToGoal)
         // {
-        //     Vector3 direction = lastAgentPosition - transform.position;
-        //     direction.Normalize();
-        //     moveForward  = direction.z;
-        //     moveSideways = direction.x;
-        // }
+        //     AddReward(0.0001f);
+        // } 
         
-        // float moveSpeed = 10f;
-        //float turnSpeed = 100f;
-        // Vector3 moveDirection = transform.forward * moveForward + transform.right * moveSideways;
-        //
-        // moveDirection.Normalize();
-        // float moveDistance = moveSpeed * Time.fixedDeltaTime;
-        //
-        // Vector3 newPosition = _agentRigidbody.position + moveDirection * moveDistance;
-        // _agentRigidbody.MovePosition(newPosition);
-        
-        // float turnAmount = moveSideways * turnSpeed * Time.fixedDeltaTime;
-        // Quaternion newRotation = Quaternion.Euler(0, transform.eulerAngles.y + turnAmount, 0);
-        // _agentRigidbody.MoveRotation(newRotation);
-        
-        // isRunning = moveForward != 0 || moveSideways != 0;
-        // animator.SetBool("Running", isRunning);
-        
-        // Raycast to detect obstacles and check if the hit object is not tagged as "Gate"/"Goal"/"SideObj"
-        // RaycastHit hit;
-        // if (Physics.Raycast(transform.localPosition, moveDirection, out hit, moveDistance))
-        // {
-        //     if (!hit.collider.CompareTag("Gate") && !hit.collider.CompareTag("Goal") && !hit.collider.CompareTag("SideObj") && hit.collider.CompareTag("Floor"))
-        //     {
-        //         float proximityPenalty = 1f - (hit.distance / moveDistance); 
-        //         AddReward(-proximityPenalty * 0.01f); 
-        //         //EndEpisode();
-        //     }
-        // }
-        
-        PenalizeProximityToWalls();
-        EncourageMovement();
-        float distanceToGoalAfter = Vector3.Distance(transform.localPosition, targetTransform.localPosition);
-        if (distanceToGoalAfter < distanceToGoal)
-        {
-            AddReward(0.002f); // Small positive reward for moving closer
-        }
-        else
-        {
-            AddReward(-0.005f); // Small penalty for moving away or staying idle
-        }
-        
-        AddReward(-0.0001f); // Speed the agent a bit.
+        AddReward(-0.0001f); // speed up the agent
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<Goal>(out Goal goal))
+        if (other.gameObject.CompareTag("Goal") && other.gameObject.name != targetTag)
         {
-            SetReward(ballReward);
-            ballReward += 0.25f;
-            navMeshAgent.ResetPath();
+            SetReward(0.5f);
+            Destroy(other.gameObject);
+        }
+        
+        if (other.gameObject.name.Contains("FinalGoal"))
+        {
+            SetReward(1f);
             _agentRigidbody.linearVelocity = Vector3.zero;
             _agentRigidbody.angularVelocity = Vector3.zero;
-            //Debug.Log("Done");
+            Debug.Log("Won");
             EndEpisode();
         }
         
-        if (other.TryGetComponent<Gate>(out Gate gate))
+        if (other.gameObject.CompareTag("Gate"))
         {
-            AddReward(0.75f);
+            AddReward(0.5f);
+            Destroy(other.gameObject);
         }
         
         if (other.gameObject.CompareTag("SideObj"))
         {
-            AddReward(0.2f);
+            AddReward(0.25f);
+            Destroy(other.gameObject);
         }
         
         if (other.gameObject.CompareTag("KillZone"))
@@ -302,13 +359,11 @@ public class MoveToGoalAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            SetReward(-2.5f);
-            ballReward -= 0.00001f;
-            navMeshAgent.ResetPath();
+             AddReward(-0.001f);
             _agentRigidbody.linearVelocity = Vector3.zero;
             _agentRigidbody.angularVelocity = Vector3.zero;
-            EndEpisode();
-                
+            // EndEpisode();
         }
+        
     }
 }
