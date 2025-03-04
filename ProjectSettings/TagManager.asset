@@ -13,6 +13,11 @@ TagManager:
   - Enemy
   - SpectatorCamera
   - FinalGoal
+  - Boss
+  - ForceField
+  - Force
+  - Spin
+  - Burst
   layers:
   - Default
   - TransparentFX
