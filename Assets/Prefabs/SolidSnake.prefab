@@ -53,19 +53,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 7
+    VectorObservationSize: 6
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 09000000
-    VectorActionSize: 09000000
+      BranchSizes: 05000000
+    VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: My Behavior
+  m_BehaviorName: SolidSnake
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -86,7 +86,8 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 500
+  bossFodder: {fileID: 0}
   forceField: {fileID: 4963114409196518053, guid: 004d5c46e07c5304fb267b4449f5e6c9, type: 3}
   spinField: {fileID: 4963114409196518053, guid: aee17d07343f41f41a4c140cb02499ca, type: 3}
   burstField: {fileID: 4963114409196518053, guid: e442e05efe8c688408e4f357baf7f53b, type: 3}
@@ -222,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SensorName: RayPerceptionSensorBoss
   m_DetectableTags:
-  - Boss
+  - Player
   m_RaysPerDirection: 15
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.5

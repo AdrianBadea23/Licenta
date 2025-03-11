@@ -4,114 +4,221 @@ using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.InputSystem;
-using Input = UnityEngine.Windows.Input;
+using System.Collections.Generic;
 
 
 public class ShootingSpirit : Agent
 {
-   [SerializeField] private GameObject bulletPrefab;
-   //[SerializeField] private MoveToGoalAgent moveToGoalAgent;
-   [SerializeField] private Transform playerTransform;
-   //[SerializeField] private SpawnEnemies spawnEnemies;
-   //private float _rotationSpeed = 5f;
-   private Vector3 enemyLocation;
-   private float timer = 0, randomTimer = 15f;
+   
+   // [SerializeField] private Transform playerTransform;
+   [SerializeField] private GameObject thunderboltPrefab;
+   [SerializeField] private GameObject enumaElisPrefab;
+   [SerializeField] private GameObject cube1;
+   [SerializeField] private GameObject cube2;
+   [SerializeField] private GameObject cube3;
+   [SerializeField] private GameObject cube4;
+   
+   private GameObject[] enemies;
+   private GameObject[] snakes;
+   private GameObject[] gandalfs;
+   private int enumaElisKillCount = 0;
+   private float thunderBoltsTimer = -1f;
+   private float enumaElisTimer = -1f;
+   private float healPlayerTimer = -1f;
+   private float EpisodeTimer = 20f;
+   
    // Start is called once before the first execution of Update after the MonoBehaviour is created
    void Start()
    {
-      transform.position = playerTransform.transform.position;
+      enemies = GameObject.FindGameObjectsWithTag("Enemy");
+      int xRange = Random.Range(-3, 13);
+      int zRange = Random.Range(-8, 8);
+      cube1.transform.localPosition = new Vector3(xRange, 0, zRange);
+      xRange = Random.Range(-3, 13);
+      zRange = Random.Range(-8, 8);
+      cube2.transform.localPosition = new Vector3(xRange, 0, zRange);
+      xRange = Random.Range(-3, 13);
+      zRange = Random.Range(-8, 8);
+      cube3.transform.localPosition = new Vector3(xRange, 0, zRange);
+      xRange = Random.Range(-3, 13);
+      zRange = Random.Range(-8, 8);
+      cube4.transform.localPosition = new Vector3(xRange, 0, zRange);
+      
    }
 
    private void FixedUpdate()
    {
-      timer += Time.fixedDeltaTime;
-   }
-
-   // Update is called once per frame
-   
-   void Update()
-   {  
-      if (timer >= randomTimer)
+      if (enumaElisTimer >= 0f)
       {
-         //spawnEnemies.SpawnTwelveEnemies();
-         randomTimer = Random.Range(10f, 60f);
-         timer = 0;
+         enumaElisTimer -= Time.fixedDeltaTime;
+      }
+
+      if (thunderBoltsTimer >= 0)
+      {
+         thunderBoltsTimer -= Time.fixedDeltaTime;
+      }
+
+      if (healPlayerTimer >= 0)
+      {
+         healPlayerTimer -= Time.fixedDeltaTime;
+      }
+
+      if (EpisodeTimer >= 0)
+      {
+         EpisodeTimer -= Time.fixedDeltaTime;
+      }
+      else
+      {
+         EndEpisode();
+         EpisodeTimer = 20f;
       }
       
-      transform.position = playerTransform.transform.position;
-      // foreach (GameObject enemy in spawnEnemies.enemies)
-      // {
-      //    if (enemy != null)
-      //    {
-      //       float distanceToPlayer = Vector3.Distance(transform.position, enemy.transform.position);
-      //       //Debug.Log(distanceToPlayer);
-      //       if (distanceToPlayer < 5f)
-      //       {
-      //          Debug.Log("Enemy is close ending episode");
-      //          SetReward(-1f);
-      //          //spawnEnemies.KillEnemies();
-      //          //EndEpisode();
-      //          break;
-      //       }
-      //    }
-      // }
-   }
-
-   private void StartShooting()
-   {
-      int rays = 100;
-      float radius = 15f;
-      LayerMask mask = LayerMask.GetMask("Enemy");
-
-      for (int i = 0; i < rays; i++)
-      {
-         float angle = (360f / rays) * i;
-         Vector3 pos = Quaternion.Euler(0, angle, 0) * transform.forward;
-         
-         Debug.DrawRay(transform.position, pos * radius, Color.red);
-         
-         if (Physics.Raycast(transform.position, pos, out RaycastHit hit, radius, mask))
-         {
-            GameObject bullet = Instantiate(bulletPrefab, hit.point, Quaternion.identity);
-            Debug.DrawRay(transform.position, pos * radius, Color.green);
-            AddReward(0.01f);
-         }
-      }
    }
    
    public override void OnEpisodeBegin()
    {
-      //spawnEnemies.SpawnTwelveEnemies();
+      thunderBoltsTimer = -1f;
+      // enumaElisTimer = -1f;
+      healPlayerTimer = -1f;
+      
+      int xRange = Random.Range(-3, 13);
+      int zRange = Random.Range(-8, 8);
+      cube1.transform.localPosition = new Vector3(xRange, 0, zRange);
+      xRange = Random.Range(-3, 13);
+      zRange = Random.Range(-8, 8);
+      cube2.transform.localPosition = new Vector3(xRange, 0, zRange);
+      xRange = Random.Range(-3, 13);
+      zRange = Random.Range(-8, 8);
+      cube3.transform.localPosition = new Vector3(xRange, 0, zRange);
+      xRange = Random.Range(-3, 13);
+      zRange = Random.Range(-8, 8);
+      cube4.transform.localPosition = new Vector3(xRange, 0, zRange);
    }
 
    public override void CollectObservations(VectorSensor sensor)
    {
-      // Raycast 3D sensor adds the observations automatically
+      sensor.AddObservation(thunderBoltsTimer);
+      sensor.AddObservation(healPlayerTimer);
+      sensor.AddObservation(enumaElisTimer);
+   }
+   
+   public override void Heuristic(in ActionBuffers actionsOut)
+   {
+      ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
+
+      if (Input.GetKey(KeyCode.Mouse0))
+      {
+         discreteActions[0] = 0;
+      }
+      else
+      {
+         discreteActions[0] = 1;
+      }
+
+      if (Input.GetKey(KeyCode.Mouse1))
+      {
+         discreteActions[1] = 0;
+      }
+      else
+      {
+         discreteActions[1] = 1;
+      }
+      
+      if (Input.GetKey(KeyCode.E))
+      {
+         discreteActions[2] = 0;
+      }
+      else
+      {
+         discreteActions[2] = 1;
+      }
+      
+   }
+
+   private void ThunderBolts()
+   {
+      if (thunderBoltsTimer <= 0f)
+      {
+         foreach (var obj in enemies)
+         {
+            if (obj != null)
+            {
+               GameObject bmSphr = Instantiate(thunderboltPrefab, obj.transform.position, Quaternion.identity);
+               Destroy(bmSphr, 1f);
+            }
+            
+         }
+         thunderBoltsTimer = 0.3f;
+      }
+   }
+
+   private void EnumaElis()
+   {
+      if (enumaElisTimer <= 0)
+      {
+         GameObject enumaElishInstance = Instantiate(enumaElisPrefab, new Vector3(transform.position.x , 0, transform.position.z ), Quaternion.identity);
+         Destroy(enumaElishInstance, 2f);
+         enumaElisTimer = 45f;
+      }
+   }
+
+   private void HealPlayer()
+   {
+      if (healPlayerTimer <= 0f)
+      {
+         Debug.Log("HealPlayer");
+         AddReward(0.2f);
+         healPlayerTimer = 2f;
+      }
    }
 
    public override void OnActionReceived(ActionBuffers actions)
    {
-      float shootTrigger = actions.ContinuousActions[0];
-      //Debug.Log(shootTrigger);
-      if (shootTrigger > 0.5f)
-      {
-         StartShooting();
-         AddReward(-0.01f);
-      }
-   }
+      int thunderBolts = actions.DiscreteActions[0];
+      int enumaElis = actions.DiscreteActions[1];
+      int healPlayer = actions.DiscreteActions[2];
 
-   public override void Heuristic(in ActionBuffers actionsOut)
-   {
-      ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-      /*
-      if (moveToGoalAgent.isShootPressed)
+      switch (thunderBolts)
       {
-         continuousActions[0] = 1f;
+         case 0:
+            ThunderBolts();
+            AddReward(0.7f);
+            break;
+         
+         case 1:
+            break;
+         
+         default:
+            break;
       }
-      else
+
+      switch (enumaElis)
       {
-         continuousActions[0] = -1f;
+         case 0:
+            EnumaElis();
+            AddReward(1f);
+            break;
+         
+         case 1:
+            break;
+         
+         default:
+            break;
       }
-      */
+      
+      switch (healPlayer)
+      {
+         case 0:
+            HealPlayer();
+            AddReward(0.5f);
+            break;
+         
+         case 1:
+            break;
+         
+         default:
+            break;
+      }
+      
    }
 }

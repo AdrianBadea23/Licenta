@@ -4,13 +4,15 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Boss : Agent
 {
-    [SerializeField] private Boss boss;
+    private GameObject bossFodder;
     [SerializeField] private GameObject forceField;
     [SerializeField] private GameObject spinField;
     [SerializeField] private GameObject burstField;
+    [SerializeField] private ShootingSpirit shootingSpirit;
     private Vector3 startPos;
     private Rigidbody _agentRigidbody;
     private float spinTimer = 0f;
@@ -22,13 +24,14 @@ public class Boss : Agent
     private List<GameObject> hotZone = new List<GameObject>();
     private float lingerTimer = 4f;
     private bool lingerActive = false;
-    private float health = 10f;
+    public float health = 7f;
     private int flasks = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _agentRigidbody = GetComponent<Rigidbody>();
-        startPos = transform.localPosition;
+        // startPos = transform.localPosition;
+        bossFodder = GameObject.FindWithTag("Player");
     }
 
     void FixedUpdate()
@@ -56,15 +59,15 @@ public class Boss : Agent
         if (shieldActive)
         {
             shieldTimerDuration -= Time.fixedDeltaTime;
-            Debug.Log(shieldTimerDuration);
-            Debug.Log(shieldActive);
+            // Debug.Log(shieldTimerDuration);
+            // Debug.Log(shieldActive);
         }
 
         if (shieldTimerDuration <= 0f)
         {
             shieldActive = false;
             shieldTimerDuration = 2f;
-            Debug.Log(shieldActive);
+            // Debug.Log(shieldActive);
         }
 
         if (lingerActive)
@@ -85,35 +88,41 @@ public class Boss : Agent
 
         if (health <= 0f)
         {
-            boss.AddReward(0.5f);
-            EndEpisode();
+            // SetReward(-0.5f);
+            // bossFodder.SetReward(0.5f);
+            // EndEpisode();
+            // bossFodder.EndEpisode();
+            // Debug.Log("SolidSnake Lost");
+            
+            // Destroy(this.gameObject);
+            // shootingSpirit.numberOfDeaths += 1;
+            Debug.Log("Boss Death");
+            health = 7f;
         }
         
     }
 
     public override void OnEpisodeBegin()
     {
-        health = 10f;
-        transform.localPosition = startPos;
+        health = 7f;
+        // transform.localPosition = startPos;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(transform.position);
+        sensor.AddObservation(bossFodder.transform.position);
         sensor.AddObservation(spinTimer);
         sensor.AddObservation(areaTimer);
         sensor.AddObservation(projectileTimer);
         sensor.AddObservation(shieldTimer);
-        sensor.AddObservation(shieldActive);
-        sensor.AddObservation(health);
-        sensor.AddObservation(flasks);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<int> discreteActions = actionsOut.DiscreteActions;
 
-        // Map WASD keys to discrete actions and 1, 2, 3, 4 to character powers
+        // Map WASD keys to discrete actions
         if (Input.GetKey(KeyCode.W))
         {
             discreteActions[0] = 0; // Forward
@@ -130,30 +139,29 @@ public class Boss : Agent
         {
             discreteActions[0] = 3; // Left
         }
-        else if (Input.GetKey(KeyCode.Alpha1))
+        else
         {
-            discreteActions[0] = 4; // First ability
+            discreteActions[0] = 4;
         }
-        else if (Input.GetKey(KeyCode.Alpha2))
+
+        if (Input.GetKey(KeyCode.Alpha1))
         {
-            discreteActions[0] = 5; //Second ability
-        }
-        else if (Input.GetKey(KeyCode.Alpha3))
+            discreteActions[1] = 0;
+        }else if(Input.GetKey(KeyCode.Alpha2))
         {
-            discreteActions[0] = 6; //Third ability
-        }
-        else if (Input.GetKey(KeyCode.Alpha4))
+            discreteActions[1] = 1;
+        }else if (Input.GetKey(KeyCode.Alpha3))
         {
-            discreteActions[0] = 7; //Fourth ability
-        }
-        else if (Input.GetKey(KeyCode.R))
+            discreteActions[1] = 2;
+        }else if (Input.GetKey(KeyCode.Alpha4))
         {
-            discreteActions[0] = 9;
+            discreteActions[1] = 3;
         }
         else
         {
-            discreteActions[0] = 8;
+            discreteActions[1] = 4;
         }
+        
     }
 
     private void SpinAttack()
@@ -170,8 +178,8 @@ public class Boss : Agent
                 Physics.IgnoreCollision(bossCollider, spinCollider, true);
             }
             
-            Destroy(spawnedObject, 0.01f);
-            spinTimer = 0.5f;
+            Destroy(spawnedObject, 1f);
+            spinTimer = 1.5f;
         }
         
     }
@@ -180,7 +188,7 @@ public class Boss : Agent
     {
         if (areaTimer <= 0f)
         {
-            GameObject spawnedObject = Instantiate(forceField, transform.position, Quaternion.identity);
+            GameObject spawnedObject = Instantiate(forceField, bossFodder.transform.position, Quaternion.identity);
 
             Collider bossCollider = GetComponent<Collider>();
             Collider forceCollider = spawnedObject.GetComponent<Collider>();
@@ -190,7 +198,7 @@ public class Boss : Agent
                 Physics.IgnoreCollision(bossCollider, forceCollider, true);
             }
             
-            Destroy(spawnedObject, 0.01f);
+            Destroy(spawnedObject, 0.1f);
             areaTimer = 1f;
         }
         
@@ -222,7 +230,7 @@ public class Boss : Agent
                 hotZone.Add(spawnedObject);
             }
             projectileTimer = 6f;
-            lingerTimer = 4f;
+            lingerTimer = 0.7f;
             lingerActive = true;
         }
         
@@ -230,6 +238,7 @@ public class Boss : Agent
 
     private void ShieldMode()
     {
+        
         if (shieldTimer <= 0f)
         {
             shieldActive = true;
@@ -239,10 +248,11 @@ public class Boss : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        int action = actions.DiscreteActions[0];
+        int movementAction = actions.DiscreteActions[0];
+        int spellAction = actions.DiscreteActions[1];
         float moveSpeed = 10f;
         Vector3 movement = Vector3.zero;
-        switch (action)
+        switch (movementAction)
         {
             case 0: // Move forward
                 movement = transform.forward * moveSpeed * Time.fixedDeltaTime;
@@ -260,78 +270,125 @@ public class Boss : Agent
                 movement = -transform.right * moveSpeed * Time.fixedDeltaTime;
                 break;
             
-            case 4: // First ability
-                SpinAttack();
-                break;
-            
-            case 5: // Second ability
-                AreaSlam();
-                break;
-            
-            case 6: // Third ability
-                ProjectileBurst();
-                break;
-            
-            case 7: // Fourth ability
-                ShieldMode();
-                break;
-            
-            case 8:
+            case 4:
                 movement = Vector3.zero;
-                break;
-            
-            case 9:
-                if (flasks > 0)
-                {
-                    health += 2f;
-                    flasks--;
-                }
-                Debug.Log(flasks);
                 break;
             
             default:
                 break;
         }
 
+        switch (spellAction)
+        {
+            case 0:
+                SpinAttack();
+                break;
+            
+            case 1:
+                AreaSlam();
+                break;
+            
+            case 2:
+                ProjectileBurst();
+                break;
+            
+            case 3:
+                ShieldMode();
+                break;
+            
+            case 4:
+                break;
+            
+            default:
+                break;
+        }
+
+        float distance = Vector3.Distance(transform.position, bossFodder.transform.position);
+        if (distance <= 2f && distance >= 0.2f)
+        {
+            AddReward(0.1f);
+            // bossFodder.AddReward(-0.1f);
+        }
+        
         if (movement != Vector3.zero)
         {
             _agentRigidbody.MovePosition(_agentRigidbody.position + movement);
+            // AddReward(0.0001f);
+        }
+        else
+        {
+            // AddReward(-0.0005f);
+        }
+        
+        
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            // EndEpisode();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Force"))
-        {   
-            Debug.Log("Applying force!");
-            _agentRigidbody.AddForce(Vector3.up * 10f, ForceMode.Impulse);
+        // if (other.gameObject.CompareTag("Force"))
+        // {   
+        //     // _agentRigidbody.AddForce(Vector3.up * 5f, ForceMode.Impulse);
+        //     health -= 0.2f;
+        //     bossFodder.AddReward(0.2f);
+        //     AddReward(-0.2f);
+        //     
+        // }
+        //
+        // if (other.gameObject.CompareTag("Player"))
+        // {
+        //     health -= 0.2f;
+        //     SetReward(-0.1f);
+        // }
+        //
+        // if (other.gameObject.CompareTag("Spin"))
+        // {
+        //     if (shieldActive)
+        //     {
+        //         health -= 0.5f;
+        //     }
+        //     else
+        //     {
+        //         health -= 1f;
+        //     }
+        //     bossFodder.AddReward(0.2f);
+        //     AddReward(-0.2f);
+        // }
+        //
+        // if (other.gameObject.CompareTag("Burst"))
+        // {
+        //     if (shieldActive)
+        //     {
+        //         health -= 0.75f;
+        //     }
+        //     else
+        //     {
+        //         health -= 1.5f;
+        //     }
+        //     bossFodder.AddReward(0.2f);
+        //     AddReward(-0.2f);
+        // }
+        //
+        // if (other.gameObject.CompareTag("KillZone"))
+        // {
+        //     EndEpisode();
+        // }
+        
+        if (other.CompareTag("Thunderbolt"))
+        {
+            health -= 2f;
         }
 
-        if (other.gameObject.CompareTag("Spin"))
+        if (other.CompareTag("EnumaElis"))
         {
-            if (shieldActive)
-            {
-                health -= 0.5f;
-            }
-            else
-            {
-                health = 1f;
-            }
-            
-        }
-
-        if (other.gameObject.CompareTag("Burst"))
-        {
-            if (shieldActive)
-            {
-                health -= 0.75f;
-            }
-            else
-            {
-                health -= 1.5f;
-            }
-            
-            Debug.Log(health);
+            health = -1f;
         }
     }
 }

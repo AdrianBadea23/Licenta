@@ -18,6 +18,10 @@ TagManager:
   - Force
   - Spin
   - Burst
+  - Boom
+  - Ultimate
+  - EnumaElis
+  - Thunderbolt
   layers:
   - Default
   - TransparentFX
