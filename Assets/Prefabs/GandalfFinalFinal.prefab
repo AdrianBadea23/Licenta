@@ -130,11 +130,9 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 4000
-  _gandalf: {fileID: 0}
   _boomSphere: {fileID: 4963114409196518053, guid: 5c7b5f805252fbb4ea9a730b9d7400ec, type: 3}
   _ultimateBoom: {fileID: 4963114409196518053, guid: f6e2be1bfd9b4d9499b7c978d6eebda7, type: 3}
   forceField: {fileID: 4963114409196518053, guid: 004d5c46e07c5304fb267b4449f5e6c9, type: 3}
-  shootingSpirit: {fileID: 0}
 --- !u!114 &777256745731242365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +157,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 61b30667e66fc5447b0ec0fd523d94ab, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: Gandalf
   TeamId: 1
   m_UseChildSensors: 1

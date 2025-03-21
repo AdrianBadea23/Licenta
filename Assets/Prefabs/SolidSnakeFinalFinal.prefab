@@ -64,7 +64,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 5276ed804291f174b8af5237bddfb6df, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: SolidSnake
   TeamId: 0
   m_UseChildSensors: 1
@@ -87,11 +87,9 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 4000
-  bossFodder: {fileID: 0}
   forceField: {fileID: 4963114409196518053, guid: 004d5c46e07c5304fb267b4449f5e6c9, type: 3}
   spinField: {fileID: 4963114409196518053, guid: aee17d07343f41f41a4c140cb02499ca, type: 3}
   burstField: {fileID: 4963114409196518053, guid: e442e05efe8c688408e4f357baf7f53b, type: 3}
-  shootingSpirit: {fileID: 0}
   health: 7
 --- !u!114 &6567566914951512379
 MonoBehaviour:

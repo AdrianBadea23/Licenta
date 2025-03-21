@@ -315,15 +315,20 @@ public class MoveToGoalAgent : Agent
         //     AddReward(0.0001f);
         // } 
         
-        AddReward(-0.0001f); // speed up the agent
+        AddReward(-0.001f); // speed up the agent
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Goal") && other.gameObject.name != targetTag)
         {
-            SetReward(0.5f);
+            SetReward(0.1f);
             Destroy(other.gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            AddReward(-0.2f);
         }
         
         if (other.gameObject.name.Contains("FinalGoal"))
@@ -335,15 +340,9 @@ public class MoveToGoalAgent : Agent
             EndEpisode();
         }
         
-        if (other.gameObject.CompareTag("Gate"))
-        {
-            AddReward(0.5f);
-            Destroy(other.gameObject);
-        }
-        
         if (other.gameObject.CompareTag("SideObj"))
         {
-            AddReward(0.25f);
+            AddReward(0.15f);
             Destroy(other.gameObject);
         }
         
@@ -359,10 +358,15 @@ public class MoveToGoalAgent : Agent
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-             AddReward(-0.001f);
-            _agentRigidbody.linearVelocity = Vector3.zero;
-            _agentRigidbody.angularVelocity = Vector3.zero;
+             // AddReward(-0.001f);
+            // _agentRigidbody.linearVelocity = Vector3.zero;
+            // _agentRigidbody.angularVelocity = Vector3.zero;
             // EndEpisode();
+        }
+
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            AddReward(-0.2f);
         }
         
     }

@@ -12,7 +12,7 @@ public class Boss : Agent
     [SerializeField] private GameObject forceField;
     [SerializeField] private GameObject spinField;
     [SerializeField] private GameObject burstField;
-    [SerializeField] private ShootingSpirit shootingSpirit;
+    // [SerializeField] private ShootingSpirit shootingSpirit;
     private Vector3 startPos;
     private Rigidbody _agentRigidbody;
     private float spinTimer = 0f;
@@ -24,7 +24,7 @@ public class Boss : Agent
     private List<GameObject> hotZone = new List<GameObject>();
     private float lingerTimer = 4f;
     private bool lingerActive = false;
-    public float health = 7f;
+    public float health = 10f;
     private int flasks = 3;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,6 +36,11 @@ public class Boss : Agent
 
     void FixedUpdate()
     {
+        if (bossFodder == null)
+        {
+            bossFodder = GameObject.FindWithTag("Player");
+        }
+        
         if (spinTimer > 0f)
         {
             spinTimer -= Time.fixedDeltaTime;
@@ -94,17 +99,35 @@ public class Boss : Agent
             // bossFodder.EndEpisode();
             // Debug.Log("SolidSnake Lost");
             
-            // Destroy(this.gameObject);
+            Destroy(this.gameObject);
             // shootingSpirit.numberOfDeaths += 1;
             Debug.Log("Boss Death");
-            health = 7f;
+            
+            GameObject[] booms = GameObject.FindGameObjectsWithTag("Spin");
+            GameObject[] ultimateBooms = GameObject.FindGameObjectsWithTag("Burst");
+            GameObject[] forceFields = GameObject.FindGameObjectsWithTag("Force");
+            
+            foreach (var boom in booms)
+            {
+                Destroy(boom);
+            }
+            
+            foreach (var ultimate in ultimateBooms)
+            {
+                Destroy(ultimate);
+            }
+
+            foreach (var field in forceFields)
+            {
+                Destroy(field);
+            }
         }
         
     }
 
     public override void OnEpisodeBegin()
     {
-        health = 7f;
+        health = 10f;
         // transform.localPosition = startPos;
     }
 
@@ -383,7 +406,7 @@ public class Boss : Agent
         
         if (other.CompareTag("Thunderbolt"))
         {
-            health -= 2f;
+            health -= 1f;
         }
 
         if (other.CompareTag("EnumaElis"))

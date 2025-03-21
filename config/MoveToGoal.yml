@@ -1,6 +1,6 @@
 behaviors:
   MoveToGoalSAC:
-    # init_path: "C:\\Users\\Adrian\\Desktop\\RL\\results\\SAC_NoWallPenaltyGym2\\MoveToGoalSAC\\MoveToGoalSAC-3981797.pt"
+    # init_path: "C:\\Users\\Adrian\\Desktop\\RL\\results\\SAC_NoWallPenaltyGym2\\MoveToGoalSAC\\MoveToGoalSAC-7329206.pt"
     trainer_type: ppo
     hyperparameters:
       batch_size: 512
@@ -25,17 +25,17 @@ behaviors:
       extrinsic:
         gamma: 0.99
         strength: 0.9
-      curiosity:
-        gamma: 0.99
-        strength: 0.1
-        encoding_size: 128
-        learning_rate: 3.0e-4
+      # curiosity:
+      #   gamma: 0.99
+      #   strength: 0.1
+      #   encoding_size: 128
+      #   learning_rate: 3.0e-4
     #   gail:
     #     strength: 0.3
-    #     demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\NotSoComfy.demo"
+    #     demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\MovementWithEnem_0.demo"
     # behavioral_cloning:
     #   strength: 0.3
-    #   demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\NotSoComfy.demo"
+    #   demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\MovementWithEnem_0.demo"
     max_steps: 10000000000000000000000000000000
     time_horizon: 1024
     summary_freq: 10000

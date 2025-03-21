@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
@@ -11,8 +12,10 @@ public class DungeonController : MonoBehaviour
     private Vector3 GoalPos;
     private GameObject[] Gates;
     private Vector3[] GatesPositions;
+    private Vector3[] EnemyPositions;
     private Quaternion[] GatesRotation;
     private GameObject[] sideObjectives;
+    private List<GameObject> enemies;
     private Vector3[] sideObjectivePositions;
     private string tileName;
 
@@ -27,6 +30,7 @@ public class DungeonController : MonoBehaviour
         // Initialize arrays based on the number of gates and side objectives found
         int gateCount = 0;
         int sideObjCount = 0;
+        int enemiesCount = 0;
         
         // First pass to count gates and side objectives
         foreach (var child in children)
@@ -47,6 +51,8 @@ public class DungeonController : MonoBehaviour
         GatesRotation = new Quaternion[gateCount];
         sideObjectives = new GameObject[sideObjCount];
         sideObjectivePositions = new Vector3[sideObjCount];
+        EnemyPositions = new Vector3[enemiesCount];
+        enemies = new List<GameObject>();
 
         // Second pass to assign gates and side objectives
         int gateIndex = 0;
@@ -100,6 +106,7 @@ public class DungeonController : MonoBehaviour
                 sideObjectives[i].transform.position = sideObjectivePositions[i];
             }
         }
+        
         
         for (int i = 0; i < Gates.Length; i++)
         {

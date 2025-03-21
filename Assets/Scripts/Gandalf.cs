@@ -10,7 +10,7 @@ public class Gandalf : Agent
     [SerializeField] private GameObject _boomSphere;
     [SerializeField] private GameObject _ultimateBoom;
     [SerializeField] private GameObject forceField;
-    [SerializeField] private ShootingSpirit shootingSpirit;
+    // [SerializeField] private ShootingSpirit shootingSpirit;
     
     private Rigidbody _agentRigidBody;
     private Vector3 _playerStartPosition;
@@ -19,7 +19,7 @@ public class Gandalf : Agent
     private bool _boomCD = true;
     private float ultimateTimer = -1f;
     private bool _ultimateBoomCd = true;
-    private float health = 5f;
+    private float health = 7f;
     private float areaTimer = 1f;
     
     private Quaternion rotation90 = Quaternion.Euler(0, 90, 0);   // Rotates 90 degrees around Y-axis
@@ -36,6 +36,11 @@ public class Gandalf : Agent
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (_gandalf == null)
+        {
+            _gandalf = GameObject.FindWithTag("Player");
+        }
+        
         if (ultimateTimer > 0f)
         {
             ultimateTimer -= Time.fixedDeltaTime;
@@ -65,17 +70,34 @@ public class Gandalf : Agent
             // bossFodder.SetReward(0.5f);
             // EndEpisode();
             // bossFodder.EndEpisode();
-            // Destroy(this.gameObject);
+            Destroy(this.gameObject);
             // shootingSpirit.numberOfDeaths += 1;
-            health = 7f;
             Debug.Log("Gandalf Death");
+            GameObject[] booms = GameObject.FindGameObjectsWithTag("Boom");
+            GameObject[] ultimateBooms = GameObject.FindGameObjectsWithTag("Ultimate");
+            GameObject[] forceFields = GameObject.FindGameObjectsWithTag("Force");
+
+            foreach (var boom in booms)
+            {
+                Destroy(boom);
+            }
+            
+            foreach (var ultimate in ultimateBooms)
+            {
+                Destroy(ultimate);
+            }
+
+            foreach (var field in forceFields)
+            {
+                Destroy(field);
+            }
         }
     }
     
     public override void OnEpisodeBegin()
     {
         // transform.localPosition = _playerStartPosition;
-        health = 5f;
+        health = 7f;
         ultimateTimer = -1f;
         _boomCD = true;
         _ultimateBoomCd = true;
@@ -286,6 +308,7 @@ public class Gandalf : Agent
 
     private void WallOfFire(float sphereX, float sphereZ, Quaternion rotation)
     {
+        
         if (boomTimer <= 0f)
         {
             GameObject bmSphr = Instantiate(_boomSphere, new Vector3(transform.position.x + sphereX * 10, 0, transform.position.z + sphereZ * 10), rotation);
@@ -381,7 +404,7 @@ public class Gandalf : Agent
 
         if (other.CompareTag("Thunderbolt"))
         {
-            health -= 2f;
+            health -= 0.5f;
         }
 
         if (other.CompareTag("EnumaElis"))
