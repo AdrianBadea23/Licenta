@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7528034266576203327}
   - component: {fileID: 5763020754656033268}
   - component: {fileID: 2140553665934937192}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpinField2
   m_TagString: Spin
   m_Icon: {fileID: 0}
@@ -118,9 +118,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7089293347535893150}
     m_Modifications:
+    - target: {fileID: 1711387084659657927, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2060900179291159282, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
       propertyPath: m_Name
       value: Snow slash
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060900179291159282, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2145314521902459719, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
       propertyPath: m_LocalScale.x
@@ -174,6 +182,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5243545912859313696, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890091439178033271, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -192,9 +208,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7089293347535893150}
     m_Modifications:
+    - target: {fileID: 1711387084659657927, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2060900179291159282, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
       propertyPath: m_Name
       value: Snow slash (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060900179291159282, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2145314521902459719, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
       propertyPath: m_LocalScale.x
@@ -247,6 +271,14 @@ PrefabInstance:
     - target: {fileID: 2145314521902459719, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5243545912859313696, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890091439178033271, guid: ca6705a3f9070d14d819d179493bcfa0, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

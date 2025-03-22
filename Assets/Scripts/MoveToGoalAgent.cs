@@ -78,6 +78,14 @@ public class MoveToGoalAgent : Agent
         // }
         
     }
+
+    public void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            EndEpisode();
+        }
+    }
     
     public void LateUpdate()
     {

@@ -14,9 +14,18 @@ public class SwarmMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        
+        
         if (target != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        }
+        else
+        {
+            // GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            // int random = Random.Range(0, enemies.Length);
+            // target = enemies[random].transform;
+            Destroy(gameObject);
         }
     }
 

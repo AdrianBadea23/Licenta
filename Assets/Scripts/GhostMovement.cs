@@ -11,9 +11,7 @@ public class GhostMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
-       int i = Random.Range(0, targets.Length);
-       target = targets[i];
+       target = GameObject.FindGameObjectWithTag("Enemy");
     }
 
     // Update is called once per frame
@@ -25,25 +23,16 @@ public class GhostMovement : MonoBehaviour
         }
         else
         {
-            GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
-            int i = Random.Range(0, targets.Length);
-            target = targets[i];
+            // GameObject[] targets = GameObject.FindGameObjectsWithTag("Enemy");
+            // int i = Random.Range(0, targets.Length - 1);
+            // target = targets[i];
+            Destroy(gameObject);
         }
         
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 0.5f);
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.gameObject == target.gameObject && hitTimer < 0)
-            {
-                GameObject hiting = Instantiate(hit, gameObject.transform.position, Quaternion.identity);
-                Destroy(hiting, 0.3f);
-                hitTimer = 0.5f;
-            }
-        }
-
-        if (hitTimer >= 0)
-        {
-            hitTimer -= Time.deltaTime;
-        }
+    }
+    
+    public void SetTarget(GameObject newTarget)
+    {
+        target = newTarget;
     }
 }

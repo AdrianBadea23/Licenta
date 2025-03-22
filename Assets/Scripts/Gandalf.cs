@@ -21,6 +21,7 @@ public class Gandalf : Agent
     private bool _ultimateBoomCd = true;
     private float health = 7f;
     private float areaTimer = 1f;
+    private float moveSpeed = 10f;
     
     private Quaternion rotation90 = Quaternion.Euler(0, 90, 0);   // Rotates 90 degrees around Y-axis
     private Quaternion rotation45 = Quaternion.Euler(0, 45, 0);   // Rotates 45 degrees around Y-axis
@@ -195,7 +196,7 @@ public class Gandalf : Agent
         int spellCastAction = actions.DiscreteActions[1];
         int wallOfFireAction = actions.DiscreteActions[2];
         int pokeMagicAction = actions.DiscreteActions[3];
-        float moveSpeed = 10f;
+        moveSpeed = 10f;
         Vector3 movement = Vector3.zero;
         switch (movementAction)
         {
@@ -404,12 +405,41 @@ public class Gandalf : Agent
 
         if (other.CompareTag("Thunderbolt"))
         {
-            health -= 0.5f;
+            health -= 0.7f;
+            Debug.Log("Thunderbolt hit " + health);
         }
-
+        
         if (other.CompareTag("EnumaElis"))
         {
             health = -1f;
+        }
+
+        if (other.CompareTag("Spin"))
+        {
+            health -= 1f;
+        }
+
+        if (other.CompareTag("Shadow"))
+        {
+            moveSpeed = 2f;
+        }
+    }
+    
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Meteor"))
+        {
+            health -= 0.07f;
+        }
+        
+        if (other.CompareTag("GhostMinions"))
+        {
+            health -= 0.07f;
+        }
+
+        if (other.CompareTag("Swarm"))
+        {
+            health = -0.02f;
         }
     }
 }

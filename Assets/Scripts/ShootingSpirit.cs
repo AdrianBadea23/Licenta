@@ -1,3 +1,4 @@
+using System;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -5,12 +6,13 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 
 public class ShootingSpirit : Agent
 {
    
-   // [SerializeField] private Transform playerTransform;
+   [SerializeField] private Transform playerTransform;
    [SerializeField] private GameObject thunderboltPrefab;
    [SerializeField] private GameObject meteorPrefab;
    [SerializeField] protected GameObject swarmPrefab;
@@ -18,7 +20,7 @@ public class ShootingSpirit : Agent
    [SerializeField] protected GameObject spinPrefab;
    [SerializeField] protected GameObject shadowPrefab;
    [SerializeField] private GameObject enumaElisPrefab;
-   // [SerializeField] private GameObject cube1;
+   [SerializeField] private GameObject cube1;
    // [SerializeField] private GameObject cube2;
    // [SerializeField] private GameObject cube3;
    // [SerializeField] private GameObject cube4;
@@ -56,14 +58,17 @@ public class ShootingSpirit : Agent
    private int second = -1;
    private int third = -1;
    
-   private float EpisodeTimer = 20f;
+   private float EpisodeTimer = 60f;
+   private float health = 20f;
+   private int numberOfEnemies = 5;
+   private float healthOfEnemy = 1;
    
    // Start is called once before the first execution of Update after the MonoBehaviour is created
    void Start()
    {
       enemies = GameObject.FindGameObjectsWithTag("Enemy");
-      int xRange = Random.Range(-3, 13);
-      int zRange = Random.Range(-8, 8);
+      int xRange = Random.Range(0, 12);
+      int zRange = Random.Range(17, 31);
       // cube1.transform.localPosition = new Vector3(xRange, 0, zRange);
       // xRange = Random.Range(-3, 13);
       // zRange = Random.Range(-8, 8);
@@ -77,9 +82,34 @@ public class ShootingSpirit : Agent
       
    }
 
+   private void SpawnEnemies()
+   {
+      for (int i = 0; i < numberOfEnemies; i++)
+      {
+         int xRange = Random.Range(0, 12);
+         int zRange = Random.Range(17, 31);
+         GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+         enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      }
+
+      healthOfEnemy += 2;
+      numberOfEnemies += 1;
+   }
+
    private void FixedUpdate()
    {
+
+      if (Input.GetKeyDown(KeyCode.Z))
+      {
+         EndEpisode();
+      }
+      
       enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+      // if (enemies == null || enemies.Length == 0)
+      // {
+      //    SpawnEnemies();
+      // }
       
       if (enumaElisTimer >= 0f)
       {
@@ -126,33 +156,46 @@ public class ShootingSpirit : Agent
          healPlayerTimer -= Time.fixedDeltaTime;
       }
 
-      if (EpisodeTimer >= 0)
-      {
-         EpisodeTimer -= Time.fixedDeltaTime;
-      }
-      else
-      {
-         EndEpisode();
-         EpisodeTimer = 20f;
-      }
+      // if (EpisodeTimer >= 0)
+      // {
+      //    EpisodeTimer -= Time.fixedDeltaTime;
+      // }
+      // else
+      // {
+      //    EndEpisode();
+      //    EpisodeTimer = 60f;
+      // }
       
       if (swarmTimer >= 0)
       {
          swarmTimer -= Time.fixedDeltaTime;
       }
+
+      if (health <= 0)
+      {
+         EndEpisode();
+         // EpisodeTimer = 60f;
+      }
       
-      // transform.position = playerTransform.position;
+      transform.position = playerTransform.position;
       // dont forget to uncomment this
    }
    
    public override void OnEpisodeBegin()
    {
+      foreach (var enemy in enemies)
+      {
+         Destroy(enemy);
+      }
+      
+      health = 20f;
+      
       thunderBoltsTimer = -1f;
       // enumaElisTimer = -1f;
       healPlayerTimer = -1f;
       
-      int xRange = Random.Range(-3, 13);
-      int zRange = Random.Range(-8, 8);
+      // int xRange = Random.Range(-3, 13);
+      // int zRange = Random.Range(-8, 8);
       // cube1.transform.localPosition = new Vector3(xRange, 0, zRange);
       // xRange = Random.Range(-3, 13);
       // zRange = Random.Range(-8, 8);
@@ -163,7 +206,27 @@ public class ShootingSpirit : Agent
       // xRange = Random.Range(-3, 13);
       // zRange = Random.Range(-8, 8);
       // cube4.transform.localPosition = new Vector3(xRange, 0, zRange);
+
+      if (healthOfEnemy > 10)
+      {
+         healthOfEnemy = 10;
+      }
+
+      if (numberOfEnemies > 15)
+      {
+         numberOfEnemies = 15;
+      }
       
+      // for (int i = 0; i < numberOfEnemies; i++)
+      // {
+      //    int xRange = Random.Range(0, 12);
+      //    int zRange = Random.Range(17, 31);
+      //    GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+      //    enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      // }
+
+      healthOfEnemy += 2;
+      numberOfEnemies += 1;
       thunderBolt = false;
       enumaElis = false;
       swarm = false;
@@ -369,7 +432,7 @@ public class ShootingSpirit : Agent
    
    private void SpinAttack()
    {
-      if (spinTimer <= 0f)
+      if (spinTimer <= 0f && enemies != null)
       {
          GameObject spawnedObject = Instantiate(spinPrefab, transform.position, Quaternion.identity);
          Destroy(spawnedObject, 1f);
@@ -380,7 +443,7 @@ public class ShootingSpirit : Agent
 
    private void ThunderBolts()
    {
-      if (thunderBoltsTimer <= 0f)
+      if (thunderBoltsTimer <= 0f && enemies != null)
       {
          foreach (var obj in enemies)
          {
@@ -397,7 +460,7 @@ public class ShootingSpirit : Agent
 
    private void MeteorShower()
    {
-      if (meteorTimer <= 0f)
+      if (meteorTimer <= 0f && enemies != null)
       {
          foreach (var obj in enemies)
          {
@@ -409,13 +472,13 @@ public class ShootingSpirit : Agent
             }
             
          }
-         meteorTimer = 6f;
+         meteorTimer = 3f;
       }
    }
 
    private void ShadowGrasp()
    {
-      if (shadowTimer <= 0f)
+      if (shadowTimer <= 0f && enemies != null)
       {
          foreach (var obj in enemies)
          {
@@ -423,7 +486,6 @@ public class ShootingSpirit : Agent
             {
                GameObject bmSphr = Instantiate(shadowPrefab, obj.transform.position, Quaternion.identity);
                Destroy(bmSphr, 1f);
-               break;
             }
             
          }
@@ -433,7 +495,7 @@ public class ShootingSpirit : Agent
 
    private void Swarm()
    {
-      if (swarmTimer <= 0f)
+      if (swarmTimer <= 0f && enemies != null)
       {
          foreach (var obj in enemies)
          {
@@ -445,29 +507,30 @@ public class ShootingSpirit : Agent
             }
             
          }
-         swarmTimer = 6f;
+         swarmTimer = 3f;
       }
    }
    
    private void Ghosts()
    {
-      if (ghostsTimer <= 0f)
+      if (ghostsTimer <= 0f && enemies != null)
       {
-         GameObject bmSphr = Instantiate(ghostPrefab, transform.position, Quaternion.identity);
-         GameObject bmSphr1 = Instantiate(ghostPrefab, transform.position, Quaternion.identity);
-         GameObject bmSphr2 = Instantiate(ghostPrefab, transform.position, Quaternion.identity);
-         GameObject bmSphr3 = Instantiate(ghostPrefab, transform.position, Quaternion.identity);
-         Destroy(bmSphr, 5f);
-         Destroy(bmSphr1, 5f);
-         Destroy(bmSphr2, 5f);
-         Destroy(bmSphr3, 5f);
+         foreach (var obj in enemies)
+         {
+            if (obj != null)
+            {
+               GameObject bmSphr = Instantiate(ghostPrefab, transform.position, Quaternion.identity);
+               bmSphr.GetComponent<GhostMovement>().SetTarget(obj);
+               Destroy(bmSphr, 5f);
+            }
+         }
          ghostsTimer = 2f;
       }
    }
    
    private void EnumaElis()
    {
-      if (enumaElisTimer <= 0 && enemies.Length > 0)
+      if (enumaElisTimer <= 0 && enemies.Length > 0 && enemies != null)
       {
          GameObject enumaElishInstance = Instantiate(enumaElisPrefab, new Vector3(transform.position.x , 0, transform.position.z ), Quaternion.identity);
          Destroy(enumaElishInstance, 2f);
@@ -479,7 +542,8 @@ public class ShootingSpirit : Agent
    {
       if (healPlayerTimer <= 0f)
       {
-         // Debug.Log("HealPlayer");
+         Debug.Log("BurstHealPlayer");
+         health += 0;
          burstHealPlayerTimer = 1f;
       }
    }
@@ -488,7 +552,8 @@ public class ShootingSpirit : Agent
    {
       if (healPlayerTimer <= 0f)
       {
-         // Debug.Log("HealPlayer");
+         health += 0;
+         Debug.Log("AOEHealPlayer");
          aoeHealPlayerTimer = 2f;
       }
    }
@@ -497,7 +562,8 @@ public class ShootingSpirit : Agent
    {
       if (healPlayerTimer <= 0f)
       {
-         // Debug.Log("HealPlayer");
+         health += 0;
+         Debug.Log("HealPlayer");
          healPlayerTimer = 2f;
       }
    }
@@ -511,8 +577,8 @@ public class ShootingSpirit : Agent
       int selectSecondAbility = actions.DiscreteActions[4];
       int selectThirdAbility = actions.DiscreteActions[5];
       
-      Debug.Log("selectFirstAbility: " + selectFirstAbility);
-      Debug.Log("firstAbility: " + firstAbility);
+      // Debug.Log("selectFirstAbility: " + selectFirstAbility);
+      // Debug.Log("firstAbility: " + firstAbility);
       
       if (choseFirst == false)
       {
@@ -580,6 +646,9 @@ public class ShootingSpirit : Agent
                break;
             
             default:
+               ghost = true;
+               choseFirst = true;
+               first = 5;
                break;
          }
       }
@@ -650,6 +719,9 @@ public class ShootingSpirit : Agent
                break;
             
             default:
+               swarm = true;
+               choseSecond = true;
+               second = 2;
                break;
          }
       }
@@ -720,6 +792,9 @@ public class ShootingSpirit : Agent
                break;
             
             default:
+               thunderBolt = true;
+               choseThird = true;
+               third = 0;
                break;
          }
       }
@@ -907,5 +982,21 @@ public class ShootingSpirit : Agent
             break;
       }
       
+   }
+
+   private void OnTriggerEnter(Collider other)
+   {
+      if (other.CompareTag("Enemy"))
+      {
+         health -= 1f;
+      }
+   }
+   
+   private void OnTriggerStay(Collider other)
+   {
+      if (other.CompareTag("Enemy"))
+      {
+         health -= 0.05f;
+      }
    }
 }

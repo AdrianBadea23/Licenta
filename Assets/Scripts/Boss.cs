@@ -26,6 +26,8 @@ public class Boss : Agent
     private bool lingerActive = false;
     public float health = 10f;
     private int flasks = 3;
+
+    private  float moveSpeed = 10f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -273,7 +275,7 @@ public class Boss : Agent
     {
         int movementAction = actions.DiscreteActions[0];
         int spellAction = actions.DiscreteActions[1];
-        float moveSpeed = 10f;
+        moveSpeed = 10f;
         Vector3 movement = Vector3.zero;
         switch (movementAction)
         {
@@ -406,12 +408,42 @@ public class Boss : Agent
         
         if (other.CompareTag("Thunderbolt"))
         {
-            health -= 1f;
+            health -= 0.7f;
+            Debug.Log("Thunderbolt hit " + health);
         }
-
+        
         if (other.CompareTag("EnumaElis"))
         {
             health = -1f;
+        }
+
+        if (other.CompareTag("Spin"))
+        {
+            health -= 1f;
+        }
+
+        if (other.CompareTag("Shadow"))
+        {
+            moveSpeed = 2f;
+        }
+    }
+    
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Meteor"))
+        {
+            health -= 0.07f;
+        }
+        
+        if (other.CompareTag("GhostMinions"))
+        {
+            health -= 0.07f;
+        }
+
+        if (other.CompareTag("Swarm"))
+        {
+            health = -0.02f;
         }
     }
 }
