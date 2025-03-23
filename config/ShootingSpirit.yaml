@@ -39,5 +39,5 @@ behaviors:
     #   demo_path: "C:\\Users\\Adrian\\Desktop\\RL\\Assets\\Demonstrations\\NotSoComfy.demo"
     max_steps: 10000000000000000000000000000000
     time_horizon: 1024
-    summary_freq: 10000
+    summary_freq: 1000
     keep_checkpoints: 100000000000

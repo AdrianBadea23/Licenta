@@ -12,7 +12,7 @@ public class BossFodder : MonoBehaviour
     private float timer = 0f;
     public float health = 2f;
     private GameObject player;
-    private float speed = 3;
+    private float speed = 7;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,7 +49,7 @@ public class BossFodder : MonoBehaviour
         if (other.CompareTag("Thunderbolt"))
         {
             health -= 0.3f;
-            Debug.Log("Thunderbolt hit " + health);
+            // Debug.Log("Thunderbolt hit " + health);
         }
         
         if (other.CompareTag("EnumaElis"))

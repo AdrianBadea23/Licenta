@@ -58,7 +58,7 @@ public class ShootingSpirit : Agent
    private int second = -1;
    private int third = -1;
    
-   private float EpisodeTimer = 60f;
+   private float EpisodeTimer = 200f;
    private float health = 20f;
    private int numberOfEnemies = 5;
    private float healthOfEnemy = 1;
@@ -84,16 +84,45 @@ public class ShootingSpirit : Agent
 
    private void SpawnEnemies()
    {
+      if (numberOfEnemies > 15)
+      {
+         numberOfEnemies = 15;
+      }
+      
       for (int i = 0; i < numberOfEnemies; i++)
       {
-         int xRange = Random.Range(0, 12);
-         int zRange = Random.Range(17, 31);
+         int xRange = 22;
+         int zRange = 42;
+         GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+         enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      }
+      
+      for (int i = 0; i < numberOfEnemies; i++)
+      {
+         int xRange = 22;
+         int zRange = 7;
+         GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+         enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      }
+      
+      for (int i = 0; i < numberOfEnemies; i++)
+      {
+         int xRange = -13;
+         int zRange = 7;
+         GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+         enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      }
+      
+      for (int i = 0; i < numberOfEnemies; i++)
+      {
+         int xRange = -13;
+         int zRange = 42;
          GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
          enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
       }
 
-      healthOfEnemy += 2;
-      numberOfEnemies += 1;
+      healthOfEnemy += 10;
+      numberOfEnemies += 3;
    }
 
    private void FixedUpdate()
@@ -156,15 +185,15 @@ public class ShootingSpirit : Agent
          healPlayerTimer -= Time.fixedDeltaTime;
       }
 
-      // if (EpisodeTimer >= 0)
-      // {
-      //    EpisodeTimer -= Time.fixedDeltaTime;
-      // }
-      // else
-      // {
-      //    EndEpisode();
-      //    EpisodeTimer = 60f;
-      // }
+      if (EpisodeTimer >= 0)
+      {
+         EpisodeTimer -= Time.fixedDeltaTime;
+      }
+      else
+      {
+         EndEpisode();
+         EpisodeTimer = 200f;
+      }
       
       if (swarmTimer >= 0)
       {
@@ -174,7 +203,7 @@ public class ShootingSpirit : Agent
       if (health <= 0)
       {
          EndEpisode();
-         // EpisodeTimer = 60f;
+         EpisodeTimer = 200f;
       }
       
       transform.position = playerTransform.position;
@@ -207,11 +236,6 @@ public class ShootingSpirit : Agent
       // zRange = Random.Range(-8, 8);
       // cube4.transform.localPosition = new Vector3(xRange, 0, zRange);
 
-      if (healthOfEnemy > 10)
-      {
-         healthOfEnemy = 10;
-      }
-
       if (numberOfEnemies > 15)
       {
          numberOfEnemies = 15;
@@ -219,14 +243,38 @@ public class ShootingSpirit : Agent
       
       // for (int i = 0; i < numberOfEnemies; i++)
       // {
-      //    int xRange = Random.Range(0, 12);
-      //    int zRange = Random.Range(17, 31);
+      //    int xRange = 22;
+      //    int zRange = 42;
+      //    GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+      //    enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      // }
+      //
+      // for (int i = 0; i < numberOfEnemies; i++)
+      // {
+      //    int xRange = 22;
+      //    int zRange = 7;
+      //    GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+      //    enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      // }
+      //
+      // for (int i = 0; i < numberOfEnemies; i++)
+      // {
+      //    int xRange = -13;
+      //    int zRange = 7;
+      //    GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
+      //    enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
+      // }
+      //
+      // for (int i = 0; i < numberOfEnemies; i++)
+      // {
+      //    int xRange = -13;
+      //    int zRange = 42;
       //    GameObject enemy = Instantiate(cube1, new Vector3(xRange, 0, zRange), Quaternion.identity);
       //    enemy.GetComponent<BossFodder>().SetHealth(healthOfEnemy);
       // }
 
-      healthOfEnemy += 2;
-      numberOfEnemies += 1;
+      healthOfEnemy = 10;
+      numberOfEnemies = 6;
       thunderBolt = false;
       enumaElis = false;
       swarm = false;
@@ -249,6 +297,9 @@ public class ShootingSpirit : Agent
 
    public override void CollectObservations(VectorSensor sensor)
    {
+      sensor.AddObservation(first);
+      sensor.AddObservation(second);
+      sensor.AddObservation(third);
       sensor.AddObservation(thunderBoltsTimer);
       sensor.AddObservation(healPlayerTimer);
       sensor.AddObservation(enumaElisTimer);
