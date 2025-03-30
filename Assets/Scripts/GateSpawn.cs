@@ -27,7 +27,7 @@ public class GateSpawn : MonoBehaviour
             Instantiate(solidSnake, new Vector3(X[0], Y[0], Z[0]), Quaternion.identity);
             Instantiate(gandalf, new Vector3(X[1], Y[1], Z[1]), Quaternion.identity);
             Instantiate(solidSnake, new Vector3(X[2], Y[2], Z[2]), Quaternion.identity);
-            // Destroy(this.gameObject);
+            Destroy(this.gameObject);
             
         }
     }

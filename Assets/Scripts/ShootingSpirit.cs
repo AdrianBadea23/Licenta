@@ -25,6 +25,8 @@ public class ShootingSpirit : Agent
    // [SerializeField] private GameObject cube3;
    // [SerializeField] private GameObject cube4;
    
+   private Vector3 velocity = Vector3.zero;
+   
    private GameObject[] enemies;
    private GameObject[] snakes;
    private GameObject[] gandalfs;
@@ -207,6 +209,7 @@ public class ShootingSpirit : Agent
       }
       
       transform.position = playerTransform.position;
+      // transform.position = Vector3.SmoothDamp(transform.position, playerTransform.position, ref velocity, 0f);
       // dont forget to uncomment this
    }
    
