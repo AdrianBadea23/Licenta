@@ -12,6 +12,8 @@ public class Boss : Agent
     [SerializeField] private GameObject forceField;
     [SerializeField] private GameObject spinField;
     [SerializeField] private GameObject burstField;
+    [SerializeField] private GameObject deathParticle;
+    [SerializeField] private GameObject chara;
     // [SerializeField] private ShootingSpirit shootingSpirit;
     private Vector3 startPos;
     private Rigidbody _agentRigidbody;
@@ -123,6 +125,9 @@ public class Boss : Agent
             {
                 Destroy(field);
             }
+            
+            GameObject deathPart = Instantiate(deathParticle, transform.position, Quaternion.identity);
+            Destroy(deathPart, 2f);
         }
         
     }
@@ -281,18 +286,22 @@ public class Boss : Agent
         {
             case 0: // Move forward
                 movement = transform.forward * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
 
             case 1: // Move backward
                 movement = -transform.forward * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
 
             case 2: // Move right
                 movement = transform.right * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
 
             case 3: // Move left
                 movement = -transform.right * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
             
             case 4:

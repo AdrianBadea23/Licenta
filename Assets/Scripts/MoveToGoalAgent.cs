@@ -4,11 +4,13 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class MoveToGoalAgent : Agent
 {
     [SerializeField]private Transform targetTransform;
+    [SerializeField] private GameObject mageChar;
     private string targetTag = "FinalGoal";
     private Rigidbody _agentRigidbody;
     private float episodeTime;
@@ -38,6 +40,11 @@ public class MoveToGoalAgent : Agent
     Vector3 randomPos = new Vector3(0, 0, 0);
     private float previousDistanceToSpawn = 0;
     [SerializeField] private DungeonController dungeonController;
+    [SerializeField] private AudioSource runAudioSource;
+    [SerializeField] private AudioClip[] runSound;
+    private float soundCd = 0.6f;
+    private float nextSoundCd = 0f;
+    
     
     public void Start()
     {
@@ -85,6 +92,8 @@ public class MoveToGoalAgent : Agent
         {
             EndEpisode();
         }
+        
+        mageChar.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
     
     public void LateUpdate()
@@ -292,21 +301,50 @@ public class MoveToGoalAgent : Agent
         {
             case 0: // Move forward
                 movement = transform.forward * moveSpeed * Time.fixedDeltaTime;
+                mageChar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
+                if (Time.time >= nextSoundCd && !runAudioSource.isPlaying) {
+                    int i = Random.Range(0, runSound.Length);
+                    runAudioSource.clip = runSound[i];
+                    runAudioSource.Play();
+                    nextSoundCd = Time.time + soundCd;
+                }
                 break;
 
             case 1: // Move backward
                 movement = -transform.forward * moveSpeed * Time.fixedDeltaTime;
+                mageChar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
+                if (Time.time >= nextSoundCd && !runAudioSource.isPlaying) {
+                    int i = Random.Range(0, runSound.Length);
+                    runAudioSource.clip = runSound[i];
+                    runAudioSource.Play();
+                    nextSoundCd = Time.time + soundCd;
+                }
                 break;
 
             case 2: // Move right
                 movement = transform.right * moveSpeed * Time.fixedDeltaTime;
+                mageChar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
+                if (Time.time >= nextSoundCd && !runAudioSource.isPlaying) {
+                    int i = Random.Range(0, runSound.Length);
+                    runAudioSource.clip = runSound[i];
+                    runAudioSource.Play();
+                    nextSoundCd = Time.time + soundCd;
+                }
                 break;
 
             case 3: // Move left
                 movement = -transform.right * moveSpeed * Time.fixedDeltaTime;
+                mageChar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
+                if (Time.time >= nextSoundCd && !runAudioSource.isPlaying) {
+                    int i = Random.Range(0, runSound.Length);
+                    runAudioSource.clip = runSound[i];
+                    runAudioSource.Play();
+                    nextSoundCd = Time.time + soundCd;
+                }
                 break;
             case 4:
                 movement = Vector3.zero;
+                mageChar.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
             default:
                 break;
@@ -345,6 +383,7 @@ public class MoveToGoalAgent : Agent
             _agentRigidbody.linearVelocity = Vector3.zero;
             _agentRigidbody.angularVelocity = Vector3.zero;
             Debug.Log("Won");
+            SceneManager.LoadScene("Scene2");
             EndEpisode();
         }
         

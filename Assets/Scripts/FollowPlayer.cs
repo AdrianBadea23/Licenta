@@ -56,7 +56,41 @@ public class FollowPlayer : MonoBehaviour
         if (_playerTransform != null)
         {
             transform.position = _playerTransform.position + _offset;
-            transform.rotation = Quaternion.Euler(52, -49, 0);
+            // transform.rotation = Quaternion.Euler(52, -49, 0);
+        }
+        
+        if (_playerTransform != null)
+        {
+            // Get input from A (-1) and D (+1) for rotation
+            float horizontalInput = 0f;
+            if (Input.GetKey(KeyCode.A)) horizontalInput = -1f;
+            if (Input.GetKey(KeyCode.D)) horizontalInput = 1f;
+
+            if (horizontalInput != 0)
+            {
+                // Rotate the offset around the player
+                Quaternion rotation = Quaternion.AngleAxis(horizontalInput * 100f * Time.deltaTime, Vector3.up);
+                _offset = rotation * _offset;
+            }
+
+            // Zoom with W and S
+            float zoomInput = 0f;
+            if (Input.GetKey(KeyCode.W)) zoomInput = -1f;
+            if (Input.GetKey(KeyCode.S)) zoomInput = 1f;
+
+            float zoomSpeed = 5f;
+            float minDistance = 5f;
+            float maxDistance = 30f;
+
+            // Adjust offset magnitude for zoom effect
+            float newDistance = Mathf.Clamp(_offset.magnitude + zoomInput * zoomSpeed * Time.deltaTime, minDistance, maxDistance);
+            _offset = _offset.normalized * newDistance;
+
+            // Maintain camera position based on offset
+            transform.position = _playerTransform.position + _offset;
+
+            // Make the camera look at the player
+            transform.LookAt(_playerTransform.position);
         }
         
     }

@@ -10,6 +10,8 @@ public class Gandalf : Agent
     [SerializeField] private GameObject _boomSphere;
     [SerializeField] private GameObject _ultimateBoom;
     [SerializeField] private GameObject forceField;
+    [SerializeField] private GameObject chara;
+    [SerializeField] private GameObject deathParticle;
     // [SerializeField] private ShootingSpirit shootingSpirit;
     
     private Rigidbody _agentRigidBody;
@@ -19,9 +21,9 @@ public class Gandalf : Agent
     private bool _boomCD = true;
     private float ultimateTimer = -1f;
     private bool _ultimateBoomCd = true;
-    private float health = 7f;
+    private float health = 100f;
     private float areaTimer = 1f;
-    private float moveSpeed = 10f;
+    public float moveSpeed;
     
     private Quaternion rotation90 = Quaternion.Euler(0, 90, 0);   // Rotates 90 degrees around Y-axis
     private Quaternion rotation45 = Quaternion.Euler(0, 45, 0);   // Rotates 45 degrees around Y-axis
@@ -92,13 +94,15 @@ public class Gandalf : Agent
             {
                 Destroy(field);
             }
+            GameObject deathPart = Instantiate(deathParticle, transform.position, Quaternion.identity);
+            Destroy(deathPart, 1f);
         }
     }
     
     public override void OnEpisodeBegin()
     {
         // transform.localPosition = _playerStartPosition;
-        health = 7f;
+        health = 100f;
         ultimateTimer = -1f;
         _boomCD = true;
         _ultimateBoomCd = true;
@@ -196,24 +200,27 @@ public class Gandalf : Agent
         int spellCastAction = actions.DiscreteActions[1];
         int wallOfFireAction = actions.DiscreteActions[2];
         int pokeMagicAction = actions.DiscreteActions[3];
-        moveSpeed = 10f;
         Vector3 movement = Vector3.zero;
         switch (movementAction)
         {
             case 0: // Move forward
                 movement = transform.forward * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
 
             case 1: // Move backward
                 movement = -transform.forward * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
 
             case 2: // Move right
                 movement = transform.right * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
 
             case 3: // Move left
                 movement = -transform.right * moveSpeed * Time.fixedDeltaTime;
+                chara.transform.rotation = Quaternion.LookRotation(movement, Vector3.up);
                 break;
             
             case 4:
@@ -405,13 +412,13 @@ public class Gandalf : Agent
 
         if (other.CompareTag("Thunderbolt"))
         {
-            health -= 0.7f;
+            health -= 5f;
             Debug.Log("Thunderbolt hit " + health);
         }
         
         if (other.CompareTag("EnumaElis"))
         {
-            health = -1f;
+            health -= 1f;
         }
 
         if (other.CompareTag("Spin"))
@@ -421,7 +428,32 @@ public class Gandalf : Agent
 
         if (other.CompareTag("Shadow"))
         {
-            moveSpeed = 2f;
+            if (tag == "Player")
+            {
+                
+            }
+            else
+            {
+                moveSpeed = 7f;
+            }
+            
+        }
+        
+        if (other.CompareTag("Swarm"))
+        {
+            health = -2f;
+            Destroy(other.gameObject);
+        }
+        
+        if (other.gameObject.CompareTag("Player"))
+        {
+            GameObject hitSmokePrefab = Resources.Load<GameObject>("VFX_TorchLight_Green");
+
+            if (hitSmokePrefab != null)
+            {
+                GameObject instance = Instantiate(hitSmokePrefab, transform.position, Quaternion.identity);
+                Destroy(instance, 3f);
+            }
         }
     }
     
@@ -436,10 +468,19 @@ public class Gandalf : Agent
         {
             health -= 0.07f;
         }
+    }
 
-        if (other.CompareTag("Swarm"))
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
         {
-            health = -0.02f;
+            GameObject hitSmokePrefab = Resources.Load<GameObject>("VFX_TorchLight_Green");
+
+            if (hitSmokePrefab != null)
+            {
+                GameObject instance = Instantiate(hitSmokePrefab, transform.position, Quaternion.identity);
+                Destroy(instance, 3f);
+            }
         }
     }
 }

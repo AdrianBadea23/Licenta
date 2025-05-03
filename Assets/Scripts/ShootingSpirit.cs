@@ -21,6 +21,10 @@ public class ShootingSpirit : Agent
    [SerializeField] protected GameObject shadowPrefab;
    [SerializeField] private GameObject enumaElisPrefab;
    [SerializeField] private GameObject cube1;
+   [SerializeField] private AudioClip thunderBoltSound;
+   [SerializeField] private AudioClip swarmSound;
+   [SerializeField] private AudioClip slowSound;
+   [SerializeField] private SpiritFlw spiritFlw;
    // [SerializeField] private GameObject cube2;
    // [SerializeField] private GameObject cube3;
    // [SerializeField] private GameObject cube4;
@@ -296,6 +300,8 @@ public class ShootingSpirit : Agent
       first = -1;
       second = -1;
       third = -1;
+      thunderBoltsTimer = 1f;
+      swarmTimer = 2f;
    }
 
    public override void CollectObservations(VectorSensor sensor)
@@ -499,16 +505,26 @@ public class ShootingSpirit : Agent
    {
       if (thunderBoltsTimer <= 0f && enemies != null)
       {
+         
          foreach (var obj in enemies)
          {
             if (obj != null)
             {
                GameObject bmSphr = Instantiate(thunderboltPrefab, obj.transform.position, Quaternion.identity);
+               Collider tndr = bmSphr.GetComponent<Collider>();
+               if (playerTransform != null)
+               {
+                  Collider player = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
+                  Physics.IgnoreCollision(player, tndr, true);
+               }
                Destroy(bmSphr, 1f);
+               
             }
-            
+            AudioSource.PlayClipAtPoint(thunderBoltSound, transform.position, 0.5f);
+            spiritFlw.ChangeColor(Color.cyan);
          }
-         thunderBoltsTimer = 0.3f;
+         thunderBoltsTimer = 1f;
+         
       }
    }
 
@@ -534,16 +550,20 @@ public class ShootingSpirit : Agent
    {
       if (shadowTimer <= 0f && enemies != null)
       {
+         
          foreach (var obj in enemies)
          {
             if (obj != null)
             {
                GameObject bmSphr = Instantiate(shadowPrefab, obj.transform.position, Quaternion.identity);
                Destroy(bmSphr, 1f);
+               AudioSource.PlayClipAtPoint(slowSound, transform.position, 0.5f);
+               spiritFlw.ChangeColor(Color.magenta);
             }
             
          }
          shadowTimer = 2f;
+         
       }
    }
 
@@ -551,17 +571,24 @@ public class ShootingSpirit : Agent
    {
       if (swarmTimer <= 0f && enemies != null)
       {
+         
          foreach (var obj in enemies)
          {
             if (obj != null)
             {
                GameObject bmSphr = Instantiate(swarmPrefab, transform.position, Quaternion.identity);
+               Collider tndr = bmSphr.GetComponent<Collider>();
                bmSphr.GetComponent<SwarmMovement>().SetTarget(obj.transform);
+               Collider player = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
+               Physics.IgnoreCollision(player, tndr, true);
                Destroy(bmSphr, 5f);
+               AudioSource.PlayClipAtPoint(swarmSound, transform.position, 0.5f);
+               spiritFlw.ChangeColor(Color.green);
             }
             
          }
          swarmTimer = 3f;
+         
       }
    }
    
@@ -856,55 +883,56 @@ public class ShootingSpirit : Agent
       switch (firstAbility)
       {
          case 0:
-            if (thunderBolt && first == 0)
-            {
-               ThunderBolts();
-            }
-
-            if (enumaElis && first == 1)
-            {
-               EnumaElis();
-            }
-
-            if (swarm && first == 2)
-            {
-               Swarm();
-            }
-
-            if (meteor && first == 3)
-            {
-               MeteorShower();
-            }
-
-            if (shadow && first == 4)
-            {
-               ShadowGrasp();
-            }
-
-            if (ghost && first == 5)
-            {
-               Ghosts();
-            }
-
-            if (spin && first == 6)
-            {
-               SpinAttack();
-            }
-
-            if (aoe && first == 7)
-            {
-               AoeHeal();
-            }
-
-            if (burst && first == 8)
-            {
-               BurstHeal();
-            }
-
-            if (healPlayer && first == 9)
-            {
-               HealPlayer();
-            }
+            ThunderBolts();
+            // if (thunderBolt && first == 0)
+            // {
+            //    ThunderBolts();
+            // }
+            //
+            // if (enumaElis && first == 1)
+            // {
+            //    EnumaElis();
+            // }
+            //
+            // if (swarm && first == 2)
+            // {
+            //    Swarm();
+            // }
+            //
+            // if (meteor && first == 3)
+            // {
+            //    MeteorShower();
+            // }
+            //
+            // if (shadow && first == 4)
+            // {
+            //    ShadowGrasp();
+            // }
+            //
+            // if (ghost && first == 5)
+            // {
+            //    Ghosts();
+            // }
+            //
+            // if (spin && first == 6)
+            // {
+            //    SpinAttack();
+            // }
+            //
+            // if (aoe && first == 7)
+            // {
+            //    AoeHeal();
+            // }
+            //
+            // if (burst && first == 8)
+            // {
+            //    BurstHeal();
+            // }
+            //
+            // if (healPlayer && first == 9)
+            // {
+            //    HealPlayer();
+            // }
             break;
          
          case 1:
@@ -917,55 +945,56 @@ public class ShootingSpirit : Agent
       switch (secondAbility)
       {
          case 0:
-            if (thunderBolt && second == 0)
-            {
-               ThunderBolts();
-            }
-
-            if (enumaElis && second == 1)
-            {
-               EnumaElis();
-            }
-
-            if (swarm && second == 2)
-            {
-               Swarm();
-            }
-
-            if (meteor && second == 3)
-            {
-               MeteorShower();
-            }
-
-            if (shadow && second == 4)
-            {
-               ShadowGrasp();
-            }
-
-            if (ghost && second == 5)
-            {
-               Ghosts();
-            }
-
-            if (spin && second == 6)
-            {
-               SpinAttack();
-            }
-
-            if (aoe && second == 7)
-            {
-               AoeHeal();
-            }
-
-            if (burst && second == 8)
-            {
-               BurstHeal();
-            }
-
-            if (healPlayer && second == 9)
-            {
-               HealPlayer();
-            }
+            // Ghosts();
+            // if (thunderBolt && second == 0)
+            // {
+            //    ThunderBolts();
+            // }
+            //
+            // if (enumaElis && second == 1)
+            // {
+            //    EnumaElis();
+            // }
+            //
+            // if (swarm && second == 2)
+            // {
+            //    Swarm();
+            // }
+            //
+            // if (meteor && second == 3)
+            // {
+            //    MeteorShower();
+            // }
+            //
+            // if (shadow && second == 4)
+            // {
+            //    ShadowGrasp();
+            // }
+            //
+            // if (ghost && second == 5)
+            // {
+            //    Ghosts();
+            // }
+            //
+            // if (spin && second == 6)
+            // {
+            //    SpinAttack();
+            // }
+            //
+            // if (aoe && second == 7)
+            // {
+            //    AoeHeal();
+            // }
+            //
+            // if (burst && second == 8)
+            // {
+            //    BurstHeal();
+            // }
+            //
+            // if (healPlayer && second == 9)
+            // {
+            //    HealPlayer();
+            // }
             break;
          
          case 1:
@@ -978,55 +1007,56 @@ public class ShootingSpirit : Agent
       switch (thirdAbility)
       {
          case 0:
-            if (thunderBolt && third == 0)
-            {
-               ThunderBolts();
-            }
-
-            if (enumaElis && third == 1)
-            {
-               EnumaElis();
-            }
-
-            if (swarm && third == 2)
-            {
-               Swarm();
-            }
-
-            if (meteor && third == 3)
-            {
-               MeteorShower();
-            }
-
-            if (shadow && third == 4)
-            {
-               ShadowGrasp();
-            }
-
-            if (ghost && third == 5)
-            {
-               Ghosts();
-            }
-
-            if (spin && third == 6)
-            {
-               SpinAttack();
-            }
-
-            if (aoe && third == 7)
-            {
-               AoeHeal();
-            }
-
-            if (burst && third == 8)
-            {
-               BurstHeal();
-            }
-
-            if (healPlayer && third == 9)
-            {
-               HealPlayer();
-            }
+            ShadowGrasp();
+            // if (thunderBolt && third == 0)
+            // {
+            //    ThunderBolts();
+            // }
+            //
+            // if (enumaElis && third == 1)
+            // {
+            //    EnumaElis();
+            // }
+            //
+            // if (swarm && third == 2)
+            // {
+            //    Swarm();
+            // }
+            //
+            // if (meteor && third == 3)
+            // {
+            //    MeteorShower();
+            // }
+            //
+            // if (shadow && third == 4)
+            // {
+            //    ShadowGrasp();
+            // }
+            //
+            // if (ghost && third == 5)
+            // {
+            //    Ghosts();
+            // }
+            //
+            // if (spin && third == 6)
+            // {
+            //    SpinAttack();
+            // }
+            //
+            // if (aoe && third == 7)
+            // {
+            //    AoeHeal();
+            // }
+            //
+            // if (burst && third == 8)
+            // {
+            //    BurstHeal();
+            // }
+            //
+            // if (healPlayer && third == 9)
+            // {
+            //    HealPlayer();
+            // }
             break;
          
          case 1:

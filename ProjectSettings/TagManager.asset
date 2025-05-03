@@ -26,6 +26,8 @@ TagManager:
   - Meteor
   - GhostMinions
   - Shadow
+  - GateSpawner
+  - SpiritFlame
   layers:
   - Default
   - TransparentFX
