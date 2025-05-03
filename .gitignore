@@ -10,6 +10,30 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+# Unity Hub Assets
+/[Aa]ssets/10 Fantasy Medieval Ambient Tracks/
+/[Aa]ssets/BrokenVector/
+/[Aa]ssets/Cartoon_Texture_Pack/
+/[Aa]ssets/Creep Horror Creature/
+/[Aa]ssets/DungeonFloorsAndWallsSamples/
+/[Aa]ssets/Fantasy Forest Environment Free Sample/
+/[Aa]ssets/Footsteps - Essentials/
+/[Aa]ssets/FourEvilDragonsPBR/
+/[Aa]ssets/Free Skyboxes - Space/
+/[Aa]ssets/Fristy Fantasy Lands 1/
+/[Aa]ssets/Hovl Studio/
+/[Aa]ssets/KayKit_Adventurers_1.0_FREE/
+/[Aa]ssets/KayKit_DungeonRemastered_1.1_FREE/
+/[Aa]ssets/KayKit_Skeletons_1.0_FREE/
+/[Aa]ssets/Leohpaz/
+/[Aa]ssets/LowlyPoly/
+/[Aa]ssets/Monster_Ghosts_FREE/
+/[Aa]ssets/Music/
+/[Aa]ssets/POLYART_Ancient Village/
+/[Aa]ssets/RPG Tiny Fantasy Forest PBR/
+/[Aa]ssets/Starfield Skybox/
+/[Aa]ssets/VFXPACK_FIRE_WALLCOEUR/
+/[Aa]ssets/Zombie
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
