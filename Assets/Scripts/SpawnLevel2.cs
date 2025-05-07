@@ -34,6 +34,7 @@ public class SpawnLevel2 : MonoBehaviour
         {
             Destroy(this.gameObject);
             Instantiate(nextObjective, spawnPos, Quaternion.identity);
+            
         }
     }
 }

@@ -133,7 +133,7 @@ MonoBehaviour:
   MaxStep: 4000
   _boomSphere: {fileID: 4963114409196518053, guid: 5c7b5f805252fbb4ea9a730b9d7400ec, type: 3}
   _ultimateBoom: {fileID: 4963114409196518053, guid: f6e2be1bfd9b4d9499b7c978d6eebda7, type: 3}
-  forceField: {fileID: 4963114409196518053, guid: 004d5c46e07c5304fb267b4449f5e6c9, type: 3}
+  forceField: {fileID: 7364934639115065868, guid: af7526161e7cb1b47bdb3d2d1dd8f900, type: 3}
   chara: {fileID: 6269347690405039610}
   deathParticle: {fileID: 5705387627814833468, guid: 3fb85eac741a7f74ba8567ee0932efd2, type: 3}
   moveSpeed: 9
