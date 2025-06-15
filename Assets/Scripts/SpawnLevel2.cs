@@ -3,11 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class SpawnLevel2 : MonoBehaviour
 {
-    [SerializeField] private GameObject spawnObjective;
+    [SerializeField] private Gandalf spawnObjective;
     [SerializeField] private GameObject nextObjective;
     private Vector3 spawnPos;
-    private GameObject enemy1;
-    private GameObject enemy2;
+    private Gandalf enemy1;
+    private Gandalf enemy2;
     private bool spawned = false;
     private float counter = 30f;
 
@@ -30,11 +30,12 @@ public class SpawnLevel2 : MonoBehaviour
             spawned = true;
         }
         
-        if ((enemy1 == null) && (enemy2 == null) && spawned)
+        if ((enemy1.GetHealth() <= 0) && (enemy2 .GetHealth() <= 0) && spawned)
         {
             Destroy(this.gameObject);
             Instantiate(nextObjective, spawnPos, Quaternion.identity);
-            
         }
+        
+        
     }
 }

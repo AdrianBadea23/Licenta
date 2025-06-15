@@ -156,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a41214702b447f242b05af652314f8a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnObjective: {fileID: 5936913195585509841, guid: b2e034aeb5d136f41aa0a78a0d674dcc, type: 3}
+  spawnObjective: {fileID: 7707512235053041664, guid: b2e034aeb5d136f41aa0a78a0d674dcc, type: 3}
   nextObjective: {fileID: 0}
 --- !u!1 &1003553270043989617
 GameObject:

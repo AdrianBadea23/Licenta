@@ -483,4 +483,9 @@ public class Gandalf : Agent
             }
         }
     }
+
+    public float GetHealth()
+    {
+        return health;
+    }
 }

@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
 
 
 public class ShootingSpirit : Agent
@@ -219,10 +220,19 @@ public class ShootingSpirit : Agent
    
    public override void OnEpisodeBegin()
    {
-      foreach (var enemy in enemies)
+      if (enemies != null)
       {
-         Destroy(enemy);
+         foreach (var enemy in enemies)
+         {
+            if (enemy != null)
+            {
+               Destroy(enemy);
+            }
+         
+         } 
       }
+      
+      
       
       health = 20f;
       
@@ -945,7 +955,11 @@ public class ShootingSpirit : Agent
       switch (secondAbility)
       {
          case 0:
-            // Ghosts();
+            if (SceneManager.GetActiveScene().name == "Level")
+            {
+               Swarm();
+            }
+            
             // if (thunderBolt && second == 0)
             // {
             //    ThunderBolts();
